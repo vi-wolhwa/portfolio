@@ -1,0 +1,165 @@
+/* =============================================================================
+   남수민 — 프론트엔드 포트폴리오 · 전역 스타일 (design tokens + layout + print)
+   -----------------------------------------------------------------------------
+   · 디자인 값(색·간격·폰트 크기)은 전부 여기에 있습니다. 색을 바꾸려면 :root의
+     CSS 변수를, 특정 요소의 크기/여백을 바꾸려면 해당 클래스를 수정하세요.
+   · @page 규칙과 CSS 카운터(proj·idx·pg)는 "문서 전체" 단위라 컴포넌트가 아니라
+     이 파일에 있어야 합니다. 프로젝트 번호(01,02…)는 이 카운터로 자동 매겨집니다.
+   · PDF로 저장: 브라우저에서 열고 Ctrl/Cmd+P → 여백 없음 + 배경 그래픽 켜기.
+   ============================================================================= */
+
+  :root{
+    --ink:#16181D; --paper:#FFFFFF; --mist:#F4F6F9; --mist2:#EDF0F5;
+    --line:#E1E5EB; --muted:#5E6B7A; --muted2:#8A94A3; --slate:#3A4250;
+    --cobalt:#3B49DF; --cobalt-soft:#EEF0FE;
+    --emerald:#0E9F73; --emerald-soft:#E6F6F0;
+    --amber:#B5730B; --amber-soft:#FBF2E2;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{ font-family:"Noto Sans KR","Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans",sans-serif; color:var(--ink); background:var(--paper);
+    font-size:10px; line-height:1.55; letter-spacing:-0.01em; counter-reset:proj idx pg; }
+  .mono{ font-family:"Noto Sans Mono CJK KR","DejaVu Sans Mono",monospace; }
+  a{ color:var(--cobalt); text-decoration:none; }
+
+  @page{ size:A4; margin:0; }
+  .page,.cover{ counter-increment:pg; }
+  .page{ width:210mm; min-height:297mm; padding:14mm 16mm 14mm; position:relative; page-break-after:always; background:var(--paper); }
+  .page:last-child{ page-break-after:auto; }
+
+  /* ========= PAGE 1 : INTRO + INDEX ========= */
+  .cover{ width:210mm; min-height:297mm; padding:13mm 16mm 11mm; display:flex; flex-direction:column; background:var(--paper); }
+  .cv-top{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--line); padding-bottom:9px; }
+  .cv-top .k{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.6px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+
+  .id{ margin-top:16px; display:flex; align-items:flex-end; justify-content:space-between; }
+  .id .nm{ font-size:40px; font-weight:900; letter-spacing:-0.03em; line-height:1; }
+  .id .role{ font-family:"Noto Sans CJK KR",sans-serif; font-size:10px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; color:var(--cobalt); padding-bottom:6px; }
+
+  .intro{ font-size:11.5px; line-height:1.65; color:#25282F; margin-top:13px; max-width:none; font-weight:450; }
+  .intro .hl{ background:linear-gradient(transparent 60%, var(--emerald-soft) 60%); font-weight:700; color:#0B7C5A; padding:0 1px; }
+
+  .meta{ display:grid; grid-template-columns:1.55fr 1fr; gap:26px; margin-top:17px; padding-top:13px; border-top:1px solid var(--line); }
+  .m-t{ font-family:"Noto Sans CJK KR",sans-serif; font-size:10px; font-weight:800; color:var(--ink); margin-bottom:10px; letter-spacing:-0.01em; }
+  .skills{ display:grid; grid-template-columns:1fr 1fr; column-gap:18px; row-gap:9px; }
+  .sk{ display:flex; gap:9px; align-items:baseline; }
+  .sk .lb{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.8px; font-weight:700; color:var(--cobalt); min-width:44px; padding-top:2px; flex-shrink:0; }
+  .sk .vv{ display:flex; flex-wrap:wrap; gap:4px; }
+  .tk{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.4px; font-weight:600; border:1px solid var(--line); border-radius:5px; padding:2.5px 7px; color:#3A4250; background:#fff; }
+  .contact{ display:flex; flex-direction:column; gap:10px; }
+  .contact a,.contact span{ font-family:"Noto Sans CJK KR",sans-serif; font-size:10px; font-weight:500; color:#2B303A; display:flex; gap:10px; align-items:center; }
+  .contact .lb{ font-weight:700; color:var(--muted); min-width:44px; font-size:8.8px; text-transform:uppercase; letter-spacing:0.02em; }
+  .contact a .u{ color:var(--cobalt); font-weight:700; }
+
+  .idx-h{ margin-top:24px; display:flex; align-items:baseline; gap:9px; border-top:1.6px solid var(--ink); padding-top:12px; }
+  .idx-h .t{ font-size:12px; font-weight:800; letter-spacing:-0.02em; }
+  .idx-h .en{ font-family:"Noto Sans CJK KR",sans-serif; font-size:7.8px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted2); }
+  .idx-h .hint{ margin-left:auto; font-family:"Noto Sans CJK KR",sans-serif; font-size:8px; color:var(--muted2); }
+
+  .index{ margin-top:6px; }
+  .idx-row{ counter-increment:idx; display:grid; grid-template-columns:28px 1fr auto; gap:12px; padding:9px 0; border-bottom:1px solid var(--line); align-items:center; }
+  .idx-num{ font-family:"Noto Sans CJK KR",sans-serif; font-size:15px; font-weight:900; color:var(--cobalt); line-height:1; align-self:center; font-variant-numeric:tabular-nums; }
+  .idx-num::before{ content:counter(idx,decimal-leading-zero); }
+  .idx-main .it{ font-size:12px; font-weight:800; letter-spacing:-0.02em; }
+  .idx-main .is{ font-size:9px; color:#39424E; margin-top:3px; line-height:1.45; }
+  .idx-main .ik{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.3px; font-weight:500; color:var(--muted2); margin-top:4px; }
+  .idx-right{ display:flex; flex-direction:column; align-items:flex-end; gap:5px; justify-content:center; }
+  .idx-org{ font-family:"Noto Sans CJK KR",sans-serif; font-size:7.8px; font-weight:700; letter-spacing:0.01em; color:var(--muted2); white-space:nowrap; }
+  .idx-org.personal{ color:#0B7C5A; }
+  .idx-comp{ font-family:"Noto Sans CJK KR",sans-serif; font-size:7.9px; font-weight:700; letter-spacing:0.01em; text-transform:uppercase; color:var(--cobalt); background:var(--cobalt-soft); padding:4px 9px; border-radius:999px; white-space:nowrap; }
+
+  .cv-foot{ margin-top:auto; border-top:1px solid var(--line); padding-top:10px; display:flex; justify-content:space-between; }
+  .cv-foot .l{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.2px; color:var(--muted2); }
+
+  /* ========= PROJECT PAGES ========= */
+  .ph{ display:flex; align-items:baseline; gap:11px; border-bottom:1.6px solid var(--ink); padding-bottom:8px; }
+  .ph .num{ font-family:"Noto Sans CJK KR",sans-serif; font-size:16px; font-weight:900; color:var(--cobalt); flex-shrink:0; font-variant-numeric:tabular-nums; }
+  .project .ph .num{ counter-increment:proj; }
+  .project .ph .num::before{ content:counter(proj,decimal-leading-zero); }
+  .ph .ttl{ font-size:17px; font-weight:800; letter-spacing:-0.025em; }
+  .ph .en{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.2px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted2); margin-left:auto; text-align:right; line-height:1.4; flex-shrink:0; }
+
+  .ctxrow{ display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap; }
+  .org-badge{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.6px; font-weight:700; letter-spacing:0.01em; padding:3px 10px; border-radius:999px; white-space:nowrap; }
+  .org-badge.personal{ background:var(--emerald-soft); color:#0B7C5A; }
+  .org-badge.intern{ background:var(--cobalt-soft); color:var(--cobalt); }
+  .org-badge.bootcamp{ background:var(--amber-soft, #FBF2E2); color:var(--amber); }
+
+  .flow{ display:flex; gap:0; margin:2px 0 4px; }
+  .flow .fstep{ flex:1; border:1px solid var(--line); border-radius:9px; padding:11px 13px; position:relative; }
+  .flow .fstep + .fstep{ margin-left:10px; }
+  .flow .fstep .fn{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8px; font-weight:800; letter-spacing:0.03em; text-transform:uppercase; color:var(--cobalt); margin-bottom:5px; }
+  .flow .fstep .ft{ font-size:9.7px; color:#2E3742; line-height:1.55; }
+  .flow .fstep .ft strong{ color:var(--ink); }
+
+  /* continuation header for 2-page projects — shows same project number, no counter-increment */
+  .ph-cont{ display:flex; align-items:baseline; gap:9px; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:15px; }
+  .ph-cont .num{ font-family:"Noto Sans CJK KR",sans-serif; font-size:12px; font-weight:700; color:var(--muted2); }
+  .ph-cont .num::before{ content:counter(proj,decimal-leading-zero); }
+  .ph-cont .ttl{ font-size:12.5px; font-weight:700; color:var(--muted); }
+  .ph-cont .tag{ margin-left:auto; font-family:"Noto Sans CJK KR",sans-serif; font-size:7.6px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted2); background:var(--mist); padding:3px 9px; border-radius:5px; }
+  .ctx-detail{ font-size:9.2px; color:var(--slate); line-height:1.5; }
+
+  .val{ background:var(--mist); border-left:2.5px solid var(--cobalt); padding:14px 17px; font-size:12.8px; font-weight:600; letter-spacing:-0.02em; line-height:1.55; margin:16px 0 21px; }
+  .val .hl{ background:linear-gradient(transparent 60%, var(--emerald-soft) 60%); font-weight:700; color:#0B7C5A; padding:0 1px; }
+
+  /* readable section heading */
+  .sec{ margin-bottom:20px; }
+  .sh{ display:flex; align-items:center; gap:7px; margin-bottom:9px; }
+  .sh::before{ content:""; width:3px; height:13px; background:var(--cobalt); border-radius:2px; }
+  .sh .t{ font-size:11.3px; font-weight:800; color:var(--ink); letter-spacing:-0.02em; }
+  .sh .en{ font-family:"Noto Sans CJK KR",sans-serif; font-size:7.8px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted2); }
+
+  p{ font-size:10.2px; color:#2E3742; line-height:1.62; }
+  .code{ font-family:"Noto Sans Mono CJK KR",monospace; font-size:8.5px; background:var(--mist2); padding:1px 5px; border-radius:4px; color:#2B303A; }
+  strong{ font-weight:700; } .g{ color:#0B7C5A; font-weight:700; } .b{ color:var(--cobalt); font-weight:700; }
+
+  .did{ list-style:none; }
+  .did li{ padding-left:16px; position:relative; margin-bottom:9px; font-size:9.9px; line-height:1.55; color:#2E3742; }
+  .did li::before{ content:""; position:absolute; left:0; top:6px; width:6px; height:6px; border-radius:2px; background:var(--cobalt); }
+  .did li .ld{ font-weight:700; color:var(--ink); }
+
+  /* comparison table */
+  table.cmp{ width:100%; border-collapse:collapse; }
+  table.cmp th,table.cmp td{ text-align:left; padding:7px 10px; font-size:8.8px; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.45; }
+  table.cmp th{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.6px; letter-spacing:0.01em; color:var(--slate); font-weight:700; background:var(--mist); }
+  table.cmp td.a{ font-weight:700; white-space:nowrap; }
+  table.cmp tr.pick td{ background:var(--emerald-soft); }
+  table.cmp tr.pick td.a{ color:#0B7C5A; }
+
+  /* trouble cards */
+  .tc{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .tc.one{ grid-template-columns:1fr; }
+  .card{ border:1px solid var(--line); border-radius:8px; padding:12px 14px; }
+  .card .ct{ font-size:9.6px; font-weight:700; color:var(--ink); margin-bottom:5px; display:flex; gap:6px; align-items:baseline; }
+  .card .ct .tag{ font-family:"Noto Sans CJK KR",sans-serif; font-size:7.4px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase; color:#fff; background:var(--ink); padding:2px 6px; border-radius:3px; }
+  .card .cb{ font-size:9.1px; color:#39424E; line-height:1.55; }
+  .card .cb .fix{ color:var(--cobalt); font-weight:700; }
+
+  /* metric strip */
+  .mets{ display:flex; gap:9px; flex-wrap:wrap; }
+  .met{ border:1px solid var(--line); border-radius:8px; padding:13px 15px; flex:1; min-width:118px; }
+  .met .mv{ font-size:15px; font-weight:900; letter-spacing:-0.025em; line-height:1.2; }
+  .met .mv small{ font-size:8.7px; font-weight:700; color:var(--muted); }
+  .met .mv.g{ color:var(--emerald); }
+  .met .ml{ font-size:8.1px; font-weight:600; color:var(--slate); margin-top:7px; line-height:1.45; letter-spacing:-0.005em; }
+
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+
+  pre{ background:#1A1D24; border-radius:8px; padding:10px 13px; margin:9px 0; }
+  pre code{ font-family:"Noto Sans Mono CJK KR",monospace; font-size:8.1px; line-height:1.65; color:#D7DCE4; white-space:pre; }
+  pre .c{ color:#7C8698; } pre .k{ color:#C4A2F2; } pre .s{ color:#8FD6A0; } pre .f{ color:#8FBCF5; } pre .n{ color:#E4B57A; }
+
+  /* footer: tech + deep-dive links */
+  .pfoot-block{ margin-top:15px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin-bottom:9px; }
+  .tags .lb{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.6px; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; color:var(--slate); margin-right:3px; }
+  .links{ border:1px solid var(--line); border-radius:9px; padding:9px 13px; background:#FCFCFE; }
+  .links .lh{ font-family:"Noto Sans CJK KR",sans-serif; font-size:8.6px; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; color:var(--slate); margin-bottom:7px; }
+  .links .row{ display:flex; flex-wrap:wrap; gap:5px 20px; }
+  .links a{ font-size:9px; display:inline-flex; gap:6px; align-items:center; line-height:1.5; }
+  .links a .ar{ color:var(--cobalt); font-family:"Noto Sans CJK KR",sans-serif; font-weight:800; }
+  .links a .u{ border-bottom:1px solid var(--cobalt-soft); }
+
+  .pfoot{ position:absolute; left:16mm; right:16mm; bottom:8mm; display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:6px; font-family:"Noto Sans CJK KR",sans-serif; font-size:7.8px; color:var(--muted2); letter-spacing:0.02em; }
+  .pfoot .pg::before{ content:counter(pg); }

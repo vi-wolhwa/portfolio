@@ -1,0 +1,23 @@
+{
+  "name": "namsumin-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "남수민 — 프론트엔드 엔지니어 포트폴리오 (React + TypeScript, A4 인쇄용)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}
