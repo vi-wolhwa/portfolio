@@ -40,7 +40,7 @@ export function Cover({ profile, projects, pageIndex, total }: Props) {
                     {c.value}
                   </a>
                 ) : (
-                  <span>{c.value}</span>
+                  <span className={styles.cValue}>{c.value}</span>
                 )}
               </li>
             ))}

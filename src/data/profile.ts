@@ -10,8 +10,8 @@ export const profile: Profile = {
   role: 'Frontend Developer',
   thesis:
     '문제를 먼저 정의하고, 사용자·팀의 비용으로 우선순위를 정해 움직이는 프론트엔드 개발자입니다.',
-  showPhoto: false, // 사진을 넣으려면 true 로 바꾸고 photoUrl 지정
-  photoUrl: '', // 예: '/me.jpg' (public 폴더) 또는 외부 URL
+  showPhoto: true, // public/me.png 를 사용. 사진을 빼려면 false
+  photoUrl: '/me.png', // public 폴더의 파일은 '/파일명' 으로 접근한다
   contacts: [
     { label: 'Email', value: 'you@example.com', href: 'mailto:you@example.com' },
     { label: 'GitHub', value: 'github.com/yourname', href: 'https://github.com/yourname' },
