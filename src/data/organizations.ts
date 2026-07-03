@@ -10,7 +10,7 @@ export const organizations: Record<string, Organization> = {
   // 카카오페이증권 — 노란색 계열
   kakaopay: { label: '카카오페이증권', fg: '#8A6B00', bg: '#FCF2CE' },
   // Evenly팀 — 초록색 계열
-  evenly: { label: 'Evenly팀', fg: '#157A4E', bg: '#E4F4EA' },
+  evenly: { label: 'Evenly Team', fg: '#157A4E', bg: '#E4F4EA' },
   // 개인 프로젝트 — 회색 계열
   personal: { label: '개인 프로젝트', fg: '#5A6472', bg: '#EDF0F4' },
   // 우아한테크코스 — 하늘색(배달의민족) 계열
