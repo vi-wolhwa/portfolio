@@ -38,7 +38,13 @@ export const projects: Project[] = [
     role: 'Frontend · 인턴',
     period: '2025.02 – 2025.08',
     stack: ['Next.js', 'React 18', 'TypeScript', 'React-query', 'MyAxios'],
-    refs: [],
+    refs: [
+      {
+        kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-A3-SSR-32ae39398dfb802aae4ac2102d30dd41',
+        label: 'SSR 전략 설계 (P-A3)',
+      },
+    ],
     problem: {
       lead: '서비스에서 가장 많은 트래픽이 몰리는 종목 정보 페이지의 핵심인 TradingView 차트가, 모바일에서 뜨기까지 오래 걸렸습니다.',
       points: [
@@ -63,7 +69,7 @@ export const projects: Project[] = [
     },
     flow: {
       problem: '핵심 페이지의 차트가 느렸고, SSR도 구조적으로 불가능했음',
-      decision: '데이터만 서버로 분리 + dynamic import 기각 후 startTransition',
+      decision: '데이터만 서버에서 프리페칭, 나머지는 우선순위 재배치(startTransition)',
       result: 'FCP 0.5s → 0.2s, 서버 비용 0 (데이터만 최소 범위로 프리페칭)',
     },
   },
@@ -78,7 +84,18 @@ export const projects: Project[] = [
     role: 'Frontend · 인턴',
     period: '2025.02 – 2025.08',
     stack: ['React', 'TypeScript', 'MSW', 'Webpack'],
-    refs: [],
+    refs: [
+      {
+        kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-B1-327e39398dfb80428d5ff64f1c9caf85',
+        label: '공통 패키지 승인 병목 (P-B1)',
+      },
+      {
+        kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-B2-MSW-API-329e39398dfb8035a221dd02b951b4f6',
+        label: 'MSW로 API 명세 검증 (P-B2)',
+      },
+    ],
     problem: {
       lead: '닉네임만 보여주던 프로필 서비스가 매매 내역·포트폴리오 같은 민감한 금융 데이터를 다루는 서비스로 개편되면서, 카카오페이 인프라에 묶여 있던 배포 체계부터 증권 자체의 독립 인프라로 옮겨야 했습니다.',
       points: [
@@ -117,7 +134,13 @@ export const projects: Project[] = [
     role: 'Frontend · 인턴',
     period: '2025.02 – 2025.08',
     stack: ['React', 'TypeScript', 'React-query'],
-    refs: [],
+    refs: [
+      {
+        kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-B3-327e39398dfb80648a09f4acec413de7',
+        label: '접근 제어 모듈 설계 (P-B3)',
+      },
+    ],
     problem: {
       lead: '프로필 개편으로 매매 내역·포트폴리오 같은 민감 데이터가 노출되며, 접근 조건이 회원 등급·약관 동의·공개 동의 3가지로 늘었습니다.',
       points: [
@@ -154,7 +177,18 @@ export const projects: Project[] = [
     role: 'Frontend · 인턴',
     period: '2025.02 – 2025.08',
     stack: ['TypeScript', 'Chrome Extension', 'GitHub API', 'Manifest V3'],
-    refs: [],
+    refs: [
+      {
+        kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-C1-333e39398dfb8099a6a8e47c73d7b7b2',
+        label: '리뷰 병목 해결 정책 (P-C1)',
+      },
+      {
+        kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-C2-Github-333e39398dfb80fb855cf05272c47276',
+        label: '크롬 익스텐션 개발기 (P-C2)',
+      },
+    ],
     problem: {
       lead: '여러 서비스가 동시에 개발되는 환경에서 리뷰 대기 중인 PR이 10~30개까지 쌓였고, 배포일 전까지 충분히 검토되지 않은 코드가 급하게 나가곤 했습니다.',
       points: [
@@ -185,7 +219,7 @@ export const projects: Project[] = [
     id: 'responsive-keepalive',
     order: 5,
     org: 'personal',
-    title: '반응형 트리 전환 상태 보존 라이브러리',
+    title: 'responsive-keepalive ─ 반응형 트리 전환 상태 보존 라이브러리',
     tagline: '브레이크포인트마다 다른 트리를 렌더링해도, 상태는 잃지 않도록 만들었습니다.',
     role: 'Frontend · 개인',
     period: '2026.05 – 2026.06',
@@ -225,12 +259,12 @@ export const projects: Project[] = [
       result: '97개 테스트·98.6% 커버리지, 0 런타임 의존성으로 npm 배포',
     },
   },
-  // ── 06 · Evenly (개인·팀 토이 프로젝트) · service 레이아웃 ────────────────────
+  // ── 06 · Evenly (Evenly팀 프로젝트) · service 레이아웃 ────────────────────────
   {
     id: 'evenly',
     order: 6,
     variant: 'service',
-    org: 'personal',
+    org: 'evenly',
     title: 'Evenly — 모임 정산(더치페이) 서비스',
     tagline: '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
     description:
@@ -238,7 +272,7 @@ export const projects: Project[] = [
     role: 'Frontend',
     period: '2025.06 – 진행 중',
     stack: ['React', 'TypeScript', 'React-query', 'axios', 'Zustand', 'Vite'],
-    refs: [],
+    refs: [{ kind: 'github', url: 'https://github.com/EvenlyTeam/evenly-frontend' }],
     highlights: [
       {
         label: '명령형 오버레이 (useOverlay)',
@@ -263,7 +297,7 @@ export const projects: Project[] = [
       },
       {
         label: '컴파운드 컴포넌트 + 런타임 가드',
-        tone: 'design',
+        tone: 'tech',
         problem: 'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
         solution:
           'createCompoundGuard로 Context 존재를 검사해, <GroupCard.Title>을 <GroupCard> 밖에서 쓰면 명확한 메시지의 런타임 에러를 던지게 했습니다. 오용을 침묵시키지 않고 즉시 드러내는 설계입니다.',
@@ -295,28 +329,28 @@ export const projects: Project[] = [
     highlights: [
       {
         label: '번들 최적화',
-        tone: 'perf',
+        tone: 'tech',
         problem: '핵심 기능인 코드 에디터(CodeMirror)가 8MB에 달해, 첫 화면 로드가 눈에 띄게 무거웠습니다.',
         solution:
           'bundle-analyzer로 뜯어보니 실제로 안 쓰는 언어 문법까지 전부 포함돼 있었습니다. 지원 언어를 실사용분으로 좁혀 Tree Shaking이 걸리게 하고, 에디터는 Dynamic Import로 초기 번들에서 떼어내 2.2MB → 1.4MB로 줄였습니다.',
       },
       {
         label: '디자인 시스템',
-        tone: 'design',
+        tone: 'tech',
         problem: '재사용성과 선언적 레이아웃에 끌려 <Flex>를 레이아웃 원자로 아토믹하게 도입했는데, 실제 화면에 쓸수록 direction·gap 같은 프롭스가 마크업을 뒤덮고 <Flex>가 무한 중첩됐습니다.',
         solution:
           '구조를 읽을 수 없는 "Flex Soup"과 Emotion의 의미 있는 네이밍 상실을 겪으며, 무조건적 세분화가 아니라 기술 스택 특성에 맞춰 추상화 수준을 제어해야 한다는 기준을 얻었습니다.',
       },
       {
         label: '웹 접근성',
-        tone: 'ux',
+        tone: 'tech',
         problem: '모달을 열어도 초점이 뒤 배경으로 새어나가고, 비동기로 바뀐 목록을 스크린리더가 읽어주지 않았습니다.',
         solution:
           '자동 검사 도구로는 잡히지 않아 VoiceOver·TalkBack 실기기로 직접 흐름을 따라가며, 포커스 트랩으로 초점을 모달 안에 가두고 aria-live로 변경 사항을 읽어주도록 고쳤습니다.',
       },
       {
         label: '레이아웃 시프트',
-        tone: 'perf',
+        tone: 'tech',
         problem: '목록·상세가 로드될 때마다 아래 콘텐츠가 밀려, 누르려던 버튼이 어긋나는 레이아웃 시프트가 반복됐습니다(CLS 0.8).',
         solution:
           '스켈레톤만으로는 실제 콘텐츠와 높이가 어긋나 시프트가 남았기에, 응답 전에 최종 높이값 자체를 예약해 콘텐츠가 그 자리에 그대로 들어오도록 만들어 CLS를 0.3으로 낮췄습니다.',

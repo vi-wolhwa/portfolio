@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import type {
   Act as ActType,
   Highlight as HighlightType,
@@ -128,12 +129,9 @@ function FlowStrip({ flow }: { flow: NonNullable<Project['flow']> }) {
       <span className={styles.flowEyebrow}>한눈에 보기</span>
       <div className={styles.flowRow}>
         {steps.map(([tone, text], i) => (
-          <div key={tone} className={styles.flowStep}>
+          <Fragment key={tone}>
             <div className={styles.flowCard} data-tone={tone}>
-              <span className={styles.flowTagRow}>
-                <span className={styles.flowDot} aria-hidden />
-                <span className={styles.flowTag}>{FLOW_LABEL[tone]}</span>
-              </span>
+              <span className={styles.flowTag}>{FLOW_LABEL[tone]}</span>
               <p className={styles.flowText}>{text}</p>
             </div>
             {i < steps.length - 1 && (
@@ -141,7 +139,7 @@ function FlowStrip({ flow }: { flow: NonNullable<Project['flow']> }) {
                 →
               </span>
             )}
-          </div>
+          </Fragment>
         ))}
       </div>
     </div>
@@ -150,31 +148,32 @@ function FlowStrip({ flow }: { flow: NonNullable<Project['flow']> }) {
 
 /** 프로젝트 1개 = A4 한 페이지. id 는 목차 앵커 이동 대상. */
 export function ProjectPage({ project, pageIndex, total }: Props) {
-  const { id, order, org, title, tagline, role, period, stack, refs } = project;
+  const { id, order, org, title, tagline, period, stack, refs } = project;
   const isService = project.variant === 'service';
 
   return (
     <section id={id} className={`page ${styles.page}`}>
-      <RefLinks refs={refs} />
-
       <header className={styles.meta}>
         <div className={styles.metaTop}>
           <span className={styles.metaLeft}>
             <span className={styles.order}>{String(order).padStart(2, '0')}</span>
             <OrgTag org={org} />
+            <ul className={styles.stack}>
+              {stack.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
           </span>
-          <span className={styles.roleRow}>
-            {role} <span className={styles.sep}>·</span> {period}
-          </span>
+          <span className={styles.roleRow}>{period}</span>
         </div>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.tagline}>{tagline}</p>
         {project.description && <p className={styles.description}>{project.description}</p>}
-        <ul className={styles.stack}>
-          {stack.map((t) => (
-            <li key={t}>{t}</li>
-          ))}
-        </ul>
+        {refs.length > 0 && (
+          <div className={styles.refsRow}>
+            <RefLinks refs={refs} />
+          </div>
+        )}
       </header>
 
       <div className={styles.body}>

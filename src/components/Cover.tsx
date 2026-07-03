@@ -65,11 +65,7 @@ export function Cover({ profile, projects, pageIndex, total }: Props) {
                     {p.title}
                   </a>
                 </span>
-                <span className={styles.tocLead}>
-                  {p.variant === 'service'
-                    ? (p.description ?? p.overview?.summary)
-                    : p.problem?.lead}
-                </span>
+                <span className={styles.tocLead}>{p.tagline}</span>
               </span>
               <OrgTag org={p.org} size="sm" />
             </li>
