@@ -7,15 +7,18 @@ import type { Profile } from '@/types/portfolio';
  */
 export const profile: Profile = {
   name: '남수민',
-  role: 'Frontend Developer',
-  thesis:
-    '문제를 먼저 정의하고, 사용자·팀의 비용으로 우선순위를 정해 움직이는 프론트엔드 개발자입니다.',
+  role: 'Frontend Engineer',
+  thesis: [
+    '우아한테크코스와 카카오페이증권을 거치며 수백만 사용자를 대상으로 서비스의 기획부터 개발, 배포까지 경험한 프론트엔드 엔지니어입니다.',
+    '단순한 UI 구현을 넘어, 차트 렌더링 파이프라인 최적화, 의존성이 격리된 접근 제어 모듈 설계, 크롬 익스텐션 기반의 개발 생산성 향상 도구 배포 등 다양한 문제를 직접 정의하고 구조적으로 해결해 왔습니다.',
+    '저만의 웹 생태계를 구축하는 <AudeModo> 프로젝트를 진행 중입니다. React/Spring을 넘어 웹 생태계 전반을 이해하고, 비즈니스의 복잡한 문제를 가장 효율적인 아키텍처로 풀어내는 올라운드 엔지니어를 목표로 합니다.',
+  ],
   showPhoto: true, // public/me.png 를 사용. 사진을 빼려면 false
   photoUrl: '/me.png', // public 폴더의 파일은 '/파일명' 으로 접근한다
   contacts: [
-    { label: 'Email', value: 'you@example.com', href: 'mailto:you@example.com' },
-    { label: 'GitHub', value: 'github.com/yourname', href: 'https://github.com/yourname' },
-    { label: 'Blog', value: 'yourblog.dev', href: 'https://yourblog.dev' },
+    { label: 'Phone', value: '010-3773-1856', href: '' },
+    { label: 'Email', value: 'cerezo00@naver.com', href: 'mailto:cerezo00@naver.com' },
+    { label: 'GitHub', value: 'github.com/vi-wolhwa', href: 'https://github.com/vi-wolhwa' },
   ],
-  keywords: ['웹 성능 최적화', 'DX / 협업 자동화', '문제 정의 & 의사결정', 'React · TypeScript'],
+  keywords: [],
 };

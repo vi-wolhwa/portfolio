@@ -3,7 +3,7 @@
   flex-direction: column;
 
   /* 오른쪽 열 폭 / 두 열 간격 (여기서 조절) */
-  --aside-w: 200px;
+  --aside-w: 190px;
   --aside-gap: 40px;
 }
 
@@ -31,17 +31,23 @@
 }
 
 .name {
-  margin: 6px 0 0;
+  margin: 10px 0 24px;
   font-size: 60px;
   line-height: 1.02;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
+.thesisWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .thesis {
-  margin: 18px 0 0;
   max-width: 52ch;
-  font-size: 16.5px;
+  margin: 0;
+  font-size: 15px;
   line-height: 1.65;
   color: var(--muted);
 }
@@ -50,17 +56,18 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 22px 0 0;
+  margin: 15px 0 0;
   padding: 0;
   list-style: none;
 
   li {
-    padding: 6px 12px;
+    padding: 7px 11px 5px 11px;
     border-radius: 999px;
     background: var(--accent-weak);
     color: var(--accent);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
+    line-height: 1.4;
   }
 }
 
@@ -74,7 +81,7 @@
 
 .photo {
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 3/4;
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid var(--line);
@@ -83,7 +90,7 @@
 .contacts {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 4px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -91,7 +98,6 @@
   li {
     display: flex;
     align-items: baseline;
-    gap: 10px;
     min-width: 0;
   }
 
@@ -115,7 +121,7 @@
 
 .cLabel {
   flex: none;
-  width: 58px;
+  width: 56px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.09em;

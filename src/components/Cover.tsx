@@ -18,7 +18,13 @@ export function Cover({ profile, projects, pageIndex, total }: Props) {
         <div className={styles.identity}>
           <p className={styles.eyebrow}>{profile.role}</p>
           <h1 className={styles.name}>{profile.name}</h1>
-          <p className={styles.thesis}>{profile.thesis}</p>
+          <div className={styles.thesisWrap}>
+            {profile.thesis.map((t, i) => (
+              <p key={i} className={styles.thesis}>
+                {t}
+              </p>
+            ))}
+          </div>
           <ul className={styles.keywords}>
             {profile.keywords.map((k) => (
               <li key={k}>{k}</li>

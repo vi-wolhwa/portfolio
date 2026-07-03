@@ -121,7 +121,7 @@ export interface Profile {
   name: string;
   role: string;
   /** 자신을 규정하는 한 문장 (thesis) */
-  thesis: string;
+  thesis: string[];
   /** 오른쪽 열 사진 노출 여부 */
   showPhoto: boolean;
   /** 사진 URL (showPhoto 가 true 일 때 사용) */
