@@ -80,6 +80,15 @@
   max-width: 68ch;
 }
 
+.description {
+  margin: 9px 0 0;
+  padding-left: 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 74ch;
+}
+
 .stack {
   display: flex;
   flex-wrap: wrap;
@@ -89,7 +98,6 @@
   list-style: none;
 
   li {
-    font-family: var(--font-mono);
     font-size: 11.5px;
     color: var(--muted);
     background: #f4f6fa;
@@ -210,10 +218,156 @@
   }
 }
 
+/* ── [service] 서비스 개요 ── */
+.service {
+  display: flex;
+  flex-direction: column;
+}
+
+.overview {
+  display: flex;
+  gap: 14px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f6f7fb 0%, #f3f5fa 100%);
+}
+
+.overview::before {
+  content: '';
+  flex: none;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.overviewMain {
+  min-width: 0;
+}
+
+.overviewSummary {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.overviewFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 9px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+}
+
+/* ── [service] 기술 하이라이트 — 톤 도트·배지 구분선 리스트 (story 언어 계승) ── */
+.hlList {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hl {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+
+  &[data-tone='problem'] {
+    --tone: var(--problem);
+    --tone-weak: var(--problem-weak);
+  }
+  &[data-tone='decision'] {
+    --tone: var(--decision);
+    --tone-weak: var(--decision-weak);
+  }
+  &[data-tone='result'] {
+    --tone: var(--result);
+    --tone-weak: var(--result-weak);
+  }
+  &[data-tone='accent'] {
+    --tone: var(--accent);
+    --tone-weak: var(--accent-weak);
+  }
+}
+
+.hl:first-child {
+  border-top: none;
+  padding-top: 2px;
+}
+
+.hlRail {
+  position: relative;
+}
+
+.hlNode {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow: 0 0 0 4px var(--tone-weak);
+}
+
+.hlBody {
+  min-width: 0;
+}
+
+.hlBadge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tone);
+  background: var(--tone-weak);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.hlProblem {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 76ch;
+}
+
+.hlSolution {
+  position: relative;
+  margin: 5px 0 0;
+  padding-left: 15px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+  font-weight: 500;
+  max-width: 76ch;
+}
+
+.hlSolution::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--tone);
+  font-weight: 700;
+}
+
 /* ── 하단 flow 요약 띠 ── */
 .flow {
   margin-top: auto;
-  padding-top: 18px;
+  padding-top: 8px;
 }
 
 .flowEyebrow {

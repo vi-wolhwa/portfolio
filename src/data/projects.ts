@@ -4,9 +4,13 @@ import type { Project } from '@/types/portfolio';
  * ─────────────────────────────────────────────────────────────────────────────
  *  프로젝트 데이터 (6개)
  * ─────────────────────────────────────────────────────────────────────────────
- *  01, 02 는 "완성 예시"(톤·밀도·flow 사용법 참고), 03~06 은 빈 템플릿.
- *   - 01: 의사결정형        / 링크: 없음(사내 비공개 프로젝트)
- *   - 02: 두 갈래 의사결정형 / 링크: 없음(사내 비공개 프로젝트)
+ *  01~05 는 완성 예시, 06 은 빈 템플릿, 07 은 service 레이아웃 예시.
+ *   - 01~04: story(문제→판단→결과 3막) / 06: story 템플릿
+ *   - 07: service(서비스 개요 + 독립 기술 하이라이트 카드) — 서비스형 프로젝트용
+ *
+ *  variant
+ *   - 미지정/'story' : problem·decision·result 3막 사용
+ *   - 'service'      : overview·highlights 사용 (문제→판단→결과가 여럿 얽힌 서비스형)
  *
  *  구성 요소
  *   - org      : 조직 태그 키 (src/data/organizations.ts)
@@ -142,59 +146,83 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'project-04',
+    id: 'code-review-chrome-extension',
     order: 4,
-    org: 'evenly',
-    title: '프로젝트 제목을 입력하세요',
-    tagline: '한 줄 요약 — 무엇을 왜 했는지 3초 안에 읽히도록.',
-    role: 'Frontend · N인',
-    period: '2024.00 – 2024.00',
-    stack: ['React', 'TypeScript', '...'],
-    refs: [{ kind: 'github', url: '#' }],
+    org: 'kakaopay',
+    title: '코드 리뷰 생산성 크롬 익스텐션',
+    tagline: '정책으로는 못 풀던 GitHub의 한계를, 크롬 익스텐션으로 해결했습니다.',
+    role: 'Frontend · 인턴',
+    period: '2025.02 – 2025.08',
+    stack: ['TypeScript', 'Chrome Extension', 'GitHub API', 'Manifest V3'],
+    refs: [],
     problem: {
-      lead: '이게 왜 문제였는지, 어떤 상황·비용이었는지 한 문장으로 못박으세요.',
-      points: ['문제를 구체적으로 보여주는 근거 1', '문제의 영향/비용 2'],
+      lead: '여러 서비스가 동시에 개발되는 환경에서 리뷰 대기 중인 PR이 10~30개까지 쌓였고, 배포일 전까지 충분히 검토되지 않은 코드가 급하게 나가곤 했습니다.',
+      points: [
+        'PR 상태를 확인하려면 목록을 하나씩 열어봐야 했고, 리뷰어와 리뷰이의 답변 왕복에 하루 이상 걸리는 경우가 잦아 중요한 PR이 조용히 묻혔습니다.',
+        'PR 분리 규칙·리뷰 코어타임·우선순위 체계 같은 팀 정책을 먼저 시도해 효과를 봤지만, 리뷰 상태 가시성과 실시간 알림만큼은 정책으로 보완할 수 없는 GitHub 플랫폼 자체의 한계로 남았습니다.',
+      ],
     },
     decision: {
-      lead: '무엇을 놓고 고민했고, 왜 그 결정을 내렸는지(대안을 버린 이유 포함).',
-      points: ['고려한 대안과 기준 1', '최종 판단의 근거 2'],
+      lead: '정책으로 못 풀던 문제를 메우려 만든 세 기능 중, 가장 까다로웠던 실시간 알림에서 같은 원인의 문제를 두 번 만났습니다.',
+      points: [
+        'GitHub는 Push를 지원하지 않아 폴링을 택했는데, setInterval은 일정 시간 뒤 멈췄습니다. Manifest V3의 Background가 Service Worker로 동작해 활동이 없으면 브라우저가 종료시키기 때문이었고, 종료돼도 유지되는 chrome.alarms API로 교체해 해결했습니다.',
+        '이어서 불필요한 요청을 줄이려 Last-Modified 헤더로 304 응답을 활용하려 했는데, 이번엔 전역 변수가 Service Worker 재활성화마다 초기화돼 무용지물이었습니다. 같은 원인이라, 값을 유지해주는 chrome.storage로 옮겨 해결했습니다.',
+      ],
     },
     result: {
-      lead: '두괄식으로 성과를 먼저. 정량 수치는 문장 속에 자연스럽게.',
-      points: ['정성 성과 한 줄'],
+      lead: '정책으로 못 풀던 문제를 도구로 메우며, 팀 전체의 리뷰 습관이 달라졌습니다.',
+      points: [
+        '조직 내 FE 개발팀 테스트에서 리뷰 기한이 만료되는 PR이 50% 이상 줄었고, 사내 FE 챕터 전체에 배포해 피드백을 받으며 계속 다듬고 있습니다.',
+      ],
     },
     flow: {
-      problem: '문제 한 줄 요약',
-      decision: '판단 한 줄 요약',
-      result: '결과 한 줄 요약',
+      problem: 'PR 10~30개 적체, 정책으로는 못 푼 GitHub 자체의 한계 남음',
+      decision: 'Service Worker 생명주기 문제 두 번 → chrome.alarms + chrome.storage',
+      result: '리뷰 기한 만료 PR 50%+ 감소, 사내 FE 챕터 배포',
     },
   },
   {
-    id: 'project-05',
+    id: 'responsive-keepalive',
     order: 5,
     org: 'personal',
-    title: '프로젝트 제목을 입력하세요',
-    tagline: '한 줄 요약 — 무엇을 왜 했는지 3초 안에 읽히도록.',
-    role: 'Frontend · N인',
-    period: '2024.00 – 2024.00',
-    stack: ['React', 'TypeScript', '...'],
-    refs: [{ kind: 'github', url: '#' }],
+    title: '반응형 트리 전환 상태 보존 라이브러리',
+    tagline: '브레이크포인트마다 다른 트리를 렌더링해도, 상태는 잃지 않도록 만들었습니다.',
+    role: 'Frontend · 개인',
+    period: '2026.05 – 2026.06',
+    stack: ['React 19.2', 'TypeScript', 'tsup', 'Vitest'],
+    refs: [
+      { kind: 'github', url: 'https://github.com/AudeModo/audemodo-responsive-keepalive' },
+      { kind: 'npm', url: 'https://www.npmjs.com/package/@audemodo/responsive-keepalive' },
+      {
+        kind: 'docs',
+        url: 'https://audemodo.github.io/audemodo-responsive-keepalive-sample/index.html',
+        label: 'Architecture & API Pipelines',
+      },
+    ],
     problem: {
-      lead: '이게 왜 문제였는지, 어떤 상황·비용이었는지 한 문장으로 못박으세요.',
-      points: ['문제를 구체적으로 보여주는 근거 1', '문제의 영향/비용 2'],
+      lead: 'Evenly 프로젝트에서 반응형 분기가 늘어날수록 컴포넌트 복잡도가 급증했고, 개인 프로젝트 규모에선 빅테크식 인프라 분리(AWD)를 감당할 수 없었습니다.',
+      points: [
+        '단일 프로젝트 안에서 모바일·데스크톱 트리를 완전히 분리하는 우회책을 시도했지만, 기기 전환 시 비활성 트리가 언마운트되며 스크롤 위치와 공유 입력값, 열린 메뉴 같은 상태가 그대로 유실됐습니다.',
+        '기존엔 UI를 숨기는 방법이 두 가지뿐이었습니다. 조건부 렌더링은 트리를 파괴해 상태를 잃고, CSS display:none은 상태는 지키지만 타이머·구독 같은 이펙트가 계속 돌아 자원을 낭비했습니다. 구조 분리와 상태 보존을 동시에 만족하는 방법이 없었습니다.',
+      ],
     },
     decision: {
-      lead: '무엇을 놓고 고민했고, 왜 그 결정을 내렸는지(대안을 버린 이유 포함).',
-      points: ['고려한 대안과 기준 1', '최종 판단의 근거 2'],
+      lead: 'React 19.2의 <Activity>는 이 둘을 동시에 풀었습니다 — 숨겨질 때 DOM과 상태는 그대로 두고, 이펙트만 정리했다가 다시 보일 때 재실행합니다.',
+      points: [
+        '핵심은 mode만 토글하고 key는 고정하는 것이었습니다. React가 같은 인스턴스로 인식해 구조를 보존하면서, 보이지 않는 동안의 부수 효과만 안전하게 정리·재생성할 수 있었습니다.',
+        '그 위에 문제 크기에 맞는 API 3종을 나눴습니다. 트리 전체는 useMediaVariant, 카드 하나의 너비는 useContainerVariant, 값 하나만 바뀌면 useResponsiveValue — 하나의 훅으로 다 풀면 작은 변화에도 트리를 통째로 바꾸는 과잉 설계가 되기 쉬웠습니다.',
+      ],
     },
     result: {
-      lead: '두괄식으로 성과를 먼저. 정량 수치는 문장 속에 자연스럽게.',
-      points: ['정성 성과 한 줄'],
+      lead: '97개 테스트와 98.6% 라인 커버리지로 완성도를 증명했고, 런타임 의존성 없이 npm에 배포했습니다.',
+      points: [
+        'SSR 환경에서는 서버에 없는 window 대신 설정된 ssr variant를 반환하고 하이드레이션 후 한 번만 재조정했고, React 19.2 미만에서는 상태 보존 없는 swap으로 자동 폴백하도록 했습니다.',
+      ],
     },
     flow: {
-      problem: '문제 한 줄 요약',
-      decision: '판단 한 줄 요약',
-      result: '결과 한 줄 요약',
+      problem: '반응형 분기 급증, 트리 분리 시 상태 유실 — 구조 분리+상태 보존 동시 해결책 없음',
+      decision: 'Activity(key 고정+mode 토글)로 상태 보존 + 문제 크기별 API 3종 분리',
+      result: '97개 테스트·98.6% 커버리지, 0 런타임 의존성으로 npm 배포',
     },
   },
   {
@@ -224,5 +252,58 @@ export const projects: Project[] = [
       decision: '판단 한 줄 요약',
       result: '결과 한 줄 요약',
     },
+  },
+
+  // ── 07 · 코드잽 (우아한테크코스 팀 프로젝트) · service 레이아웃 ───────────────
+  {
+    id: 'codezap',
+    order: 7,
+    variant: 'service',
+    org: 'woowacourse',
+    title: '코드잽 — 코드 템플릿 저장·공유 서비스',
+    tagline: '5개월간 하나의 서비스를 처음부터 만들며 마주친 프론트엔드 문제들을, 하나씩 파고들어 풀었습니다.',
+    description:
+      '자주 쓰는 코드를 매번 이전 프로젝트에서 뒤지던 개발자를 위해, 코드 템플릿을 저장하고 빠르게 검색·재사용하는 서비스입니다. 프론트엔드 3인·백엔드 5인이 실사용 서비스로 배포했고, 저는 프론트엔드 개발자로 참여했습니다.',
+    role: 'Frontend · FE 3인 · BE 5인',
+    period: '2024.07 – 2024.11',
+    stack: ['React', 'TypeScript', 'Webpack', 'Emotion', 'CodeMirror'],
+    refs: [
+      { kind: 'github', url: 'https://github.com/woowacourse-teams/2024-code-zap' },
+      {
+        kind: 'docs',
+        url: 'https://github.com/woowacourse-teams/2024-code-zap/wiki',
+        label: '프로젝트 위키',
+      },
+    ],
+    highlights: [
+      {
+        label: '번들 최적화',
+        tone: 'decision',
+        problem: '핵심 기능인 코드 에디터(CodeMirror)가 8MB에 달해, 첫 화면 로드가 눈에 띄게 무거웠습니다.',
+        solution:
+          'bundle-analyzer로 뜯어보니 실제로 안 쓰는 언어 문법까지 전부 포함돼 있었습니다. 지원 언어를 실사용분으로 좁혀 Tree Shaking이 걸리게 하고, 에디터는 Dynamic Import로 초기 번들에서 떼어내 2.2MB → 1.4MB로 줄였습니다.',
+      },
+      {
+        label: '디자인 시스템',
+        tone: 'problem',
+        problem: '재사용성과 선언적 레이아웃에 끌려 <Flex>를 레이아웃 원자로 아토믹하게 도입했는데, 실제 화면에 쓸수록 direction·gap 같은 프롭스가 마크업을 뒤덮고 <Flex>가 무한 중첩됐습니다.',
+        solution:
+          '구조를 읽을 수 없는 "Flex Soup"과 Emotion의 의미 있는 네이밍 상실을 겪으며, 무조건적 세분화가 아니라 기술 스택 특성에 맞춰 추상화 수준을 제어해야 한다는 기준을 얻었습니다.',
+      },
+      {
+        label: '웹 접근성',
+        tone: 'accent',
+        problem: '모달을 열어도 초점이 뒤 배경으로 새어나가고, 비동기로 바뀐 목록을 스크린리더가 읽어주지 않았습니다.',
+        solution:
+          '자동 검사 도구로는 잡히지 않아 VoiceOver·TalkBack 실기기로 직접 흐름을 따라가며, 포커스 트랩으로 초점을 모달 안에 가두고 aria-live로 변경 사항을 읽어주도록 고쳤습니다.',
+      },
+      {
+        label: '레이아웃 시프트',
+        tone: 'result',
+        problem: '목록·상세가 로드될 때마다 아래 콘텐츠가 밀려, 누르려던 버튼이 어긋나는 레이아웃 시프트가 반복됐습니다(CLS 0.8).',
+        solution:
+          '스켈레톤만으로는 실제 콘텐츠와 높이가 어긋나 시프트가 남았기에, 응답 전에 최종 높이값 자체를 예약해 콘텐츠가 그 자리에 그대로 들어오도록 만들어 CLS를 0.3으로 낮췄습니다.',
+      },
+    ],
   },
 ];

@@ -40,7 +40,8 @@
   --font-sans:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI',
     Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* mono 폰트 제거 — 남은 참조는 모두 sans 로 렌더된다 */
+  --font-mono: var(--font-sans);
 }
 
 * {
