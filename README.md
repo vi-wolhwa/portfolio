@@ -1,139 +1,94 @@
-# 남수민 — 프론트엔드 포트폴리오 (React)
+# Frontend Portfolio (A4 / PDF)
 
-기존 HTML 포트폴리오를 **React + TypeScript + Vite** 컴포넌트 프로젝트로 옮긴 것입니다.
-디자인·레이아웃·인쇄 결과(A4 8페이지)는 기존과 동일하며, 이제 각 요소가 컴포넌트로
-분리되어 있어 원하는 부분만 골라 커스터마이즈할 수 있습니다.
+프로젝트 스토리(문제 → 판단 → 결과)를 한 페이지에 담아, 바쁜 면접관이 **한 눈에** 읽고 질문할 수 있게 만든 포트폴리오 보일러플레이트입니다. 화면에서는 웹 문서처럼 보이고, 그대로 A4/PDF로 인쇄됩니다.
+
+## 스택
+
+- Vite + React 18 + TypeScript
+- SCSS Modules (디자인 토큰은 CSS 변수)
+- ESLint + Prettier
+- 웹폰트: Pretendard(본문) · JetBrains Mono(데이터·태그·링크)
+
+## 실행
+
+```bash
+npm install
+npm run dev      # 개발 서버
+npm run build    # 타입체크 + 프로덕션 빌드
+npm run preview  # 빌드 결과 미리보기
+```
+
+## 내용 채우는 곳 (여기만 수정하면 됩니다)
+
+- `src/data/profile.ts` — 이름·소개·연락처·역량 키워드 (커버/목차)
+- `src/data/projects.ts` — 프로젝트 6개. `01`, `02`는 완성 예시, `03~06`은 빈 템플릿
+  - 목차는 이 파일을 **단일 출처**로 자동 생성됩니다 (별도 수정 불필요)
+- 타입/구조 정의는 `src/types/portfolio.ts`
+
+## PDF로 저장
+
+우측 하단 **`PDF로 저장 / 인쇄`** 버튼(또는 `Cmd/Ctrl + P`) → 대상 "PDF로 저장", 여백 "없음", **배경 그래픽 켜기**.
+
+## A4 넘침 감지
+
+각 페이지는 정확히 210 × 297mm로 고정됩니다. 내용이 297mm를 넘으면:
+
+- 해당 페이지 테두리가 **빨간색**으로 표시되고
+- 개발 모드 콘솔에 몇 번째 페이지가 넘쳤는지 경고가 찍힙니다 (`usePageGuard`)
+
+넘치면 항목(points)을 줄이거나 문장을 압축하세요. **한 페이지를 넘기지 않는 것**이 이 포트폴리오의 핵심 제약입니다.
 
 ---
 
-## 실행 방법
+## 글 작성 원칙
 
-```bash
-npm install      # 최초 1회
-npm run dev      # 개발 서버 (수정하면 즉시 반영) → 안내되는 http://localhost:5173 접속
-```
+> 면접관은 바쁩니다. 기술 깊이를 자랑하는 문서는 피곤합니다. **"이 사람이 어떤 문제를, 왜, 어떻게 풀었는가"** 가 3초 안에 읽혀야 하고, 그 위에서 질문이 나오게 만드는 것이 목표입니다.
 
-빌드가 잘 되는지 확인하려면:
+### 1. 스토리라인은 항상 3막
 
-```bash
-npm run build    # 타입 체크 + 프로덕션 빌드 (dist/ 생성)
-npm run preview  # 빌드 결과를 로컬에서 미리보기
-```
+| 막 | 필드 | 무엇을 쓰나 |
+| --- | --- | --- |
+| 문제 · 배경 | `problem` | **왜 이게 문제였는지** 상황과 비용을 구체적으로. 이 막이 납득되지 않으면 나머지가 무너집니다. |
+| 고민 & 의사결정 | `decision` | **왜 그렇게 판단했는가.** 고려한 대안과 버린 이유까지. (트러블슈팅이면 증상 → 가설 → 검증) |
+| 결과 | `result` | **두괄식으로 성과 먼저.** 정량은 `metrics`(before → after). |
 
-## PDF로 저장 (제출용)
+### 2. 각 막은 `lead` 한 줄 + `points` 2~4개
 
-1. `npm run dev` 로 띄운 화면을 **크롬(Chrome)** 으로 엽니다.
-2. `Ctrl+P` (Mac은 `Cmd+P`) → **PDF로 저장**.
-3. 설정에서 **여백(Margins): 없음**, **배경 그래픽(Background graphics): 켜기**.
-4. 저장하면 기존과 동일한 A4 8페이지 PDF가 나옵니다.
+- `lead`: 그 한 줄만 읽어도 요지가 전달되는 두괄식 문장.
+- `points`: 근거·디테일. 한 항목당 1~2줄. 나열이 길어지면 자릅니다.
 
-> 항목을 늘리거나 줄이면 특정 페이지가 한 장을 넘길 수 있습니다. 저장 전 인쇄
-> 미리보기로 각 페이지가 잘리지 않는지 확인하세요.
+### 3. tagline 은 3초 룰
+
+프로젝트 제목 아래 한 줄(`tagline`)만 읽고도 **무엇을·왜** 했는지 알 수 있어야 합니다.
+
+### 4. 기술은 최소, 판단은 최대
+
+- 스택은 태그로만 짧게. 라이브러리 이름 나열로 페이지를 채우지 않습니다.
+- 지면은 "무엇을 만들었나"보다 "왜 그렇게 결정했나"에 씁니다.
+
+### 5. 참고 링크는 1~3개, 상단 고정
+
+`refs`는 페이지 맨 위 액션 바에 크게 노출됩니다. GitHub · Live · 회고 순으로 중요도 높은 것부터.
+
+### 6. 지표는 before → after 로
+
+`metrics`는 `{ label, before, after, delta }`. 정량 성과가 있을 때만 넣습니다. 없으면 정성 성과를 `result.points`에 한 줄로.
 
 ---
 
-## 폴더 구조
+## 구조
 
 ```
 src/
-├─ main.tsx                  진입점 (전역 CSS 로드)
-├─ App.tsx                   표지 + 프로젝트들을 순서대로 렌더
-├─ types.ts                  공통 타입 정의
-│
-├─ styles/
-│  └─ portfolio.css          ★ 모든 디자인(색·간격·폰트·인쇄·번호 카운터)
-│
 ├─ data/
-│  ├─ profile.tsx            ★ 이름·소개·기술 스택·연락처 (표지 내용)
-│  └─ projects.tsx           ★ 프로젝트 순서·목차·구성 (배열 하나)
-│
+│  ├─ profile.ts        # 개인 정보 (커버)
+│  └─ projects.ts       # 프로젝트 6개 ← 주로 여기만 수정
+├─ types/portfolio.ts   # 데이터 스키마 (스토리 구조를 강제)
+├─ hooks/usePageGuard.ts# 297mm 초과 감지
 ├─ components/
-│  ├─ primitives/            Highlight(초록 강조), Code(인라인 코드)
-│  ├─ cover/                 표지 조각들 (Identity, Intro, SkillGroups, Contact, ProjectIndex …)
-│  ├─ layout/                Page/ProjectPage/ContinuationPage, 헤더, 푸터
-│  └─ sections/              본문 재사용 블록
-│                            (Section, ValueStatement, Bullets, ComparisonTable,
-│                             TroubleCards, FlowSteps, MetricGrid, FootBlock, CodeBlock, OrgBadge)
-│
-└─ projects/                 ★ 프로젝트별 페이지 내용
-   ├─ OssProject.tsx         (responsive-keepalive, 2페이지)
-   ├─ SsrProject.tsx
-   ├─ MfeProject.tsx
-   ├─ CodeReviewProject.tsx
-   ├─ ReliabilityProject.tsx
-   └─ CodeZapProject.tsx
+│  ├─ Cover.tsx         # 1p: 개인정보 + 목차
+│  ├─ ProjectPage.tsx   # 2p~: 프로젝트 1개 = 1페이지 (3막 레일)
+│  ├─ RefLinks.tsx      # 상단 참고 링크 바
+│  └─ PrintToolbar.tsx  # 인쇄 버튼 (화면 전용)
+└─ styles/global.scss   # 디자인 토큰 · A4 지면 · 인쇄 규칙
 ```
-
-★ 표시가 가장 자주 건드리게 될 파일입니다.
-
----
-
-## 커스터마이즈 가이드
-
-### 1) 표지 내용 바꾸기 → `src/data/profile.tsx`
-
-이름·직무·소개 문단·기술 스택·연락처가 전부 여기 있습니다. 값만 바꾸면 됩니다.
-
-### 2) 프로젝트 순서 / 추가 / 제외 → `src/data/projects.tsx`
-
-이 배열 **하나**가 (a) 표지 목차 순서와 (b) 실제 페이지 순서를 동시에 결정합니다.
-번호(01, 02 …)는 CSS 카운터가 자동으로 매기므로 순서만 바꾸면 번호도 따라 바뀝니다.
-
-```tsx
-export const projects = [
-  { id: 'oss', Component: OssProject, index: { … } },  // 이 줄들을
-  { id: 'ssr', Component: SsrProject, index: { … } },  // 순서 바꾸거나
-  // …                                                    지우거나 추가
-];
-```
-
-- **순서 변경**: 요소 순서를 바꾸세요.
-- **제외**: 해당 요소를 삭제(또는 `//` 주석)하세요.
-- **추가**: `src/projects/` 에 새 컴포넌트를 만들고 위 배열에 한 줄 추가하세요.
-
-### 3) 프로젝트 내용 바꾸기 → `src/projects/*.tsx`
-
-각 프로젝트 페이지는 아래 재사용 컴포넌트를 조립해 만듭니다. 텍스트/수치/카드/표만
-바꾸면 디자인은 유지됩니다.
-
-| 컴포넌트           | 용도                                    |
-| ------------------ | --------------------------------------- |
-| `<Section>`        | 소제목이 달린 한 섹션                   |
-| `<ValueStatement>` | 상단 한 줄 요약(코발트 강조 박스)       |
-| `<Bullets>`        | 불릿 목록 (`lead` 굵은 앞머리 + 내용)   |
-| `<ComparisonTable>`| 선택지 비교표 (`pick`으로 채택 행 강조) |
-| `<TroubleCards>`   | 2×2 트러블슈팅 카드                     |
-| `<FlowSteps>`      | 가로 단계(프로세스) 카드                |
-| `<MetricGrid>`     | 결과 수치 스트립 (`green`으로 강조)     |
-| `<CodeBlock>`      | 문법 강조되는 코드 블록                 |
-| `<FootBlock>`      | 하단 기술 태그 + 링크                   |
-| `<Highlight>`      | 본문 속 초록 형광펜                     |
-| `<Code>`           | 본문 속 인라인 코드/식별자              |
-
-### 4) 프로젝트를 2페이지로 늘리기
-
-`OssProject.tsx` 가 예시입니다. 첫 페이지는 `<ProjectPage>`, 이어지는 페이지는
-`<ContinuationPage>` 로 감싸면 번호가 올라가지 않고 같은 프로젝트로 이어집니다.
-
-```tsx
-<>
-  <ProjectPage title="…" …>{/* 1페이지 내용 */}</ProjectPage>
-  <ContinuationPage title="…">{/* 2페이지 내용 */}</ContinuationPage>
-</>
-```
-
-### 5) 디자인(색·간격·폰트) 바꾸기 → `src/styles/portfolio.css`
-
-- 색은 파일 맨 위 `:root` 의 CSS 변수(`--cobalt`, `--emerald` …)에서 한 번에.
-- 특정 요소 크기/여백은 해당 클래스에서.
-- **고정폭(Mono) 폰트는 `.code` 와 `pre code`(코드 블록) 안에서만** 쓰도록 되어 있습니다.
-  가독성 때문에 다른 곳에는 쓰지 않는 것을 권장합니다.
-
----
-
-## 참고
-
-- 한글 폰트는 `index.html` 에서 Google Fonts(Noto Sans KR)를 불러옵니다. 오프라인이면
-  OS 기본 고딕으로 자동 폴백됩니다.
-- 페이지 번호·프로젝트 번호는 CSS 카운터(`pg`, `proj`, `idx`)로 자동 계산되므로 직접
-  숫자를 쓰지 않습니다.

@@ -1,0 +1,161 @@
+/* =============================================================================
+   Design tokens + A4 page frame + print rules
+   -----------------------------------------------------------------------------
+   컨셉: "서류"가 아니라 제품 릴리즈 노트 같은 웹 문서.
+   - .page / .cover 는 훅(usePageGuard)이 참조하므로 전역 클래스로 둔다.
+   - 색/타이포는 모두 CSS 변수로 노출 → 모듈 SCSS에서 var()로 재사용.
+   ============================================================================= */
+
+:root {
+  /* --- 지면 --- */
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --page-pad: 15mm;
+  --page-gap: 12mm; /* PDF 뷰어처럼 페이지 사이 여백 */
+
+  /* --- 색: 잉크 & 중립 --- */
+  --ink: #1a1d24;
+  --muted: #5a6472;
+  --faint: #9aa4b2;
+  --line: #e7eaf0;
+  --paper: #ffffff;
+  --app-bg: #e8ebf0;
+
+  /* --- 색: 액센트(제품 인디고) --- */
+  --accent: #5b5bd6;
+  --accent-weak: #eef0fe;
+
+  /* --- 색: 3막 상태(문제/판단/결과) --- */
+  --problem: #c2410c;
+  --problem-weak: #fdf0e8;
+  --decision: #4f46e5;
+  --decision-weak: #eef0fe;
+  --result: #0e7c61;
+  --result-weak: #e4f4ee;
+
+  /* --- 위험 --- */
+  --danger: #e0503a;
+
+  /* --- 타이포 --- */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI',
+    Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  word-break: keep-all; /* 한글 어절 단위 줄바꿈 */
+}
+
+a {
+  color: inherit;
+}
+
+/* --- 페이지 스택 (화면) --- */
+.pages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--page-gap);
+  padding: var(--page-gap) 16px calc(var(--page-gap) + 48px);
+}
+
+/* --- A4 한 장 --- */
+.page,
+.cover {
+  position: relative;
+  width: var(--page-w);
+  height: var(--page-h);
+  padding: var(--page-pad);
+  background: var(--paper);
+  border: 1px solid transparent; /* border-box 라 외곽 크기는 210×297 유지 */
+  border-radius: 3px;
+  box-shadow:
+    0 1px 2px rgba(20, 22, 30, 0.06),
+    0 12px 32px rgba(20, 22, 30, 0.1);
+  overflow: hidden; /* 넘친 내용은 잘려 보이고, 훅이 빨간 테두리로 경고 */
+}
+
+/* --- 297mm 초과 시 경고 --- */
+.page.is-overflow,
+.cover.is-overflow {
+  border-color: var(--danger);
+  box-shadow:
+    0 0 0 2px rgba(224, 80, 58, 0.35),
+    0 12px 32px rgba(224, 80, 58, 0.18);
+}
+
+/* 접근성 기본선 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =============================================================================
+   인쇄 (A4 / PDF)
+   ============================================================================= */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .pages {
+    gap: 0;
+    padding: 0;
+  }
+
+  .page,
+  .cover {
+    width: 210mm;
+    height: 297mm;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .page:last-child,
+  .cover:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  /* 액센트/상태 배경색을 인쇄에도 그대로 */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

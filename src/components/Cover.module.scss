@@ -1,0 +1,209 @@
+.cover {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 히어로 ── */
+.hero {
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.name {
+  margin: 6px 0 0;
+  font-size: 64px;
+  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.thesis {
+  margin: 18px 0 0;
+  max-width: 62ch;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--accent-weak);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+
+  li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+.cLabel {
+  color: var(--faint);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── 목차 ── */
+.tocWrap {
+  flex: 1;
+  padding-top: 26px;
+}
+
+.tocHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+
+  h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+}
+
+.tocNote {
+  font-size: 12.5px;
+  color: var(--faint);
+}
+
+.toc {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tocItem {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: start;
+  gap: 16px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+
+  &:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+.tocOrder {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  padding-top: 1px;
+}
+
+.tocBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.tocTitle {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.tocLead {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.tocPage {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--faint);
+  padding-top: 3px;
+}
+
+/* ── 푸터 ── */
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+
+  i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-left: 8px;
+
+    &[data-tone='problem'] {
+      background: var(--problem);
+    }
+    &[data-tone='decision'] {
+      background: var(--decision);
+    }
+    &[data-tone='result'] {
+      background: var(--result);
+    }
+  }
+}
+
+.pageNo {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--faint);
+}
