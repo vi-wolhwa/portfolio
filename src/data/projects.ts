@@ -37,8 +37,8 @@ export const projects: Project[] = [
     tagline:
       '가장 중요한 페이지가 느렸던 근본 원인을 찾아, 데이터와 렌더링 우선순위를 재설계했습니다.',
     role: 'Frontend · 인턴',
-    period: '2025.02 – 2025.08',
-    stack: ['Next.js', 'React 18', 'TypeScript', 'React-query', 'MyAxios'],
+    period: '2025.04 – 2025.07',
+    stack: ['# SSR', '# React-query', '# Hydration', '# startTransition'],
     refs: [
       {
         kind: 'docs',
@@ -84,8 +84,8 @@ export const projects: Project[] = [
     tagline:
       '닉네임 프로필을 금융 데이터 서비스로 개편하려면, 독립 배포 인프라로의 이관이 먼저였습니다.',
     role: 'Frontend · 인턴',
-    period: '2025.02 – 2025.08',
-    stack: ['React', 'TypeScript', 'MSW', 'Webpack'],
+    period: '2025.05 – 2025.07',
+    stack: ['# MFE', '# MSW', '# API', '# Collaborate'],
     refs: [
       {
         kind: 'docs',
@@ -135,8 +135,8 @@ export const projects: Project[] = [
     tagline:
       '컴포넌트가 데이터 출력과 권한 판단을 동시에 떠안지 않도록, 두 책임을 구조적으로 분리했습니다.',
     role: 'Frontend · 인턴',
-    period: '2025.02 – 2025.08',
-    stack: ['React', 'TypeScript', 'React-query'],
+    period: '2025.05 – 2025.07',
+    stack: ['# Access Control', '# SoC', '# CustomHook'],
     refs: [
       {
         kind: 'docs',
@@ -171,6 +171,8 @@ export const projects: Project[] = [
       result: '새 조건 추가돼도 컴포넌트 불변 (다만 데이터 신선도는 트레이드오프)',
     },
   },
+
+  // ── 04 · 코드 리뷰 생산성 크롬 익스텐션 ──────────────────────────────────────────
   {
     id: 'code-review-chrome-extension',
     order: 4,
@@ -178,8 +180,8 @@ export const projects: Project[] = [
     title: '코드 리뷰 생산성 크롬 익스텐션',
     tagline: '정책으로는 못 풀던 GitHub의 한계를, 크롬 익스텐션으로 해결했습니다.',
     role: 'Frontend · 인턴',
-    period: '2025.02 – 2025.08',
-    stack: ['TypeScript', 'Chrome Extension', 'GitHub API', 'Manifest V3'],
+    period: '2025.05 – 2025.07',
+    stack: ['# Code Review', '# Chrome Extension', '# GitHub API'],
     refs: [
       {
         kind: 'docs',
@@ -218,6 +220,8 @@ export const projects: Project[] = [
       result: '리뷰 기한 만료 PR 50%+ 감소, 사내 FE 챕터 배포',
     },
   },
+
+  // ── 05 · responsive-keepalive ─ 반응형 트리 전환 상태 보존 라이브러리 ──────────────────────────────────────────
   {
     id: 'responsive-keepalive',
     order: 5,
@@ -226,7 +230,7 @@ export const projects: Project[] = [
     tagline: '브레이크포인트마다 다른 트리를 렌더링해도, 상태는 잃지 않도록 만들었습니다.',
     role: 'Frontend · 개인',
     period: '2026.05 – 2026.06',
-    stack: ['React 19.2', 'TypeScript', 'tsup', 'Vitest'],
+    stack: ['# NPM Package', '# Adaptive UI', '# Keep-Alive', '# Activity'],
     refs: [
       { kind: 'github', url: 'https://github.com/AudeModo/audemodo-responsive-keepalive' },
       { kind: 'npm', url: 'https://www.npmjs.com/package/@audemodo/responsive-keepalive' },
@@ -262,6 +266,7 @@ export const projects: Project[] = [
       result: '97개 테스트·98.6% 커버리지, 0 런타임 의존성으로 npm 배포',
     },
   },
+
   // ── 06 · Evenly (Evenly팀 프로젝트) · service 레이아웃 ────────────────────────
   {
     id: 'evenly',
@@ -275,7 +280,7 @@ export const projects: Project[] = [
       '여행·모임 지출을 모아 “누가 누구에게 얼마”를 최소 송금으로 정리해주는 더치페이 서비스입니다. 정산 계산은 서버가 맡고 있어, 저는 의도적으로 프론트엔드의 핵심 역량 — 재사용 가능한 UI 추상화와 HTTP·인증 설계 — 을 끝까지 밀어붙이는 것을 이 프로젝트의 목표로 삼았습니다.',
     role: 'Frontend',
     period: '2025.06 – 진행 중',
-    stack: ['React', 'TypeScript', 'React-query', 'axios', 'Zustand', 'Vite'],
+    stack: ['# Imperative Overlay', '# Single-flight', '# Runtime Guard'],
     refs: [{ kind: 'github', url: 'https://github.com/EvenlyTeam/evenly-frontend' }],
     highlights: [
       {
@@ -326,7 +331,7 @@ export const projects: Project[] = [
       '자주 쓰는 코드를 매번 이전 프로젝트에서 뒤지던 개발자를 위해, 코드 템플릿을 저장하고 빠르게 검색·재사용하는 서비스입니다. 프론트엔드 3인·백엔드 5인이 실사용 서비스로 배포했고, 저는 프론트엔드 개발자로 참여했습니다.',
     role: 'Frontend · FE 3인 · BE 5인',
     period: '2024.07 – 2024.11',
-    stack: ['React', 'TypeScript', 'Webpack', 'Emotion', 'CodeMirror'],
+    stack: ['# Tree Shaking', '# Code Splitting', '# Design System', '# Accessibility'],
     refs: [
       { kind: 'github', url: 'https://github.com/woowacourse-teams/2024-code-zap' },
       {
