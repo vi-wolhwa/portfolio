@@ -130,7 +130,10 @@ function FlowStrip({ flow }: { flow: NonNullable<Project['flow']> }) {
         {steps.map(([tone, text], i) => (
           <div key={tone} className={styles.flowStep}>
             <div className={styles.flowCard} data-tone={tone}>
-              <span className={styles.flowTag}>{FLOW_LABEL[tone]}</span>
+              <span className={styles.flowTagRow}>
+                <span className={styles.flowDot} aria-hidden />
+                <span className={styles.flowTag}>{FLOW_LABEL[tone]}</span>
+              </span>
               <p className={styles.flowText}>{text}</p>
             </div>
             {i < steps.length - 1 && (

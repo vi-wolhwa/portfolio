@@ -225,33 +225,50 @@ export const projects: Project[] = [
       result: '97개 테스트·98.6% 커버리지, 0 런타임 의존성으로 npm 배포',
     },
   },
+  // ── 06 · Evenly (개인·팀 토이 프로젝트) · service 레이아웃 ────────────────────
   {
-    id: 'project-06',
+    id: 'evenly',
     order: 6,
-    org: 'kakaopay',
-    title: '프로젝트 제목을 입력하세요',
-    tagline: '한 줄 요약 — 무엇을 왜 했는지 3초 안에 읽히도록.',
-    role: 'Frontend · N인',
-    period: '2024.00 – 2024.00',
-    stack: ['React', 'TypeScript', '...'],
-    refs: [{ kind: 'github', url: '#' }],
-    problem: {
-      lead: '이게 왜 문제였는지, 어떤 상황·비용이었는지 한 문장으로 못박으세요.',
-      points: ['문제를 구체적으로 보여주는 근거 1', '문제의 영향/비용 2'],
-    },
-    decision: {
-      lead: '무엇을 놓고 고민했고, 왜 그 결정을 내렸는지(대안을 버린 이유 포함).',
-      points: ['고려한 대안과 기준 1', '최종 판단의 근거 2'],
-    },
-    result: {
-      lead: '두괄식으로 성과를 먼저. 정량 수치는 문장 속에 자연스럽게.',
-      points: ['정성 성과 한 줄'],
-    },
-    flow: {
-      problem: '문제 한 줄 요약',
-      decision: '판단 한 줄 요약',
-      result: '결과 한 줄 요약',
-    },
+    variant: 'service',
+    org: 'personal',
+    title: 'Evenly — 모임 정산(더치페이) 서비스',
+    tagline: '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
+    description:
+      '여행·모임 지출을 모아 “누가 누구에게 얼마”를 최소 송금으로 정리해주는 더치페이 서비스입니다. 정산 계산은 서버가 맡고 있어, 저는 의도적으로 프론트엔드의 핵심 역량 — 재사용 가능한 UI 추상화와 HTTP·인증 설계 — 을 끝까지 밀어붙이는 것을 이 프로젝트의 목표로 삼았습니다.',
+    role: 'Frontend',
+    period: '2025.06 – 진행 중',
+    stack: ['React', 'TypeScript', 'React-query', 'axios', 'Zustand', 'Vite'],
+    refs: [],
+    highlights: [
+      {
+        label: '명령형 오버레이 (useOverlay)',
+        tone: 'tech',
+        problem: '지출 삭제·정산 완료·회원 탈퇴 등 확인 다이얼로그가 화면마다 반복됐는데, 매번 isOpen state와 콜백을 부모가 들고 있어야 해 보일러플레이트가 쌓였습니다.',
+        solution:
+          '모달을 트리에 선언하는 대신 const ok = await confirm({...}) 한 줄로 여는 Promise 기반 오버레이를 만들었습니다. Portal로 트리 밖에 렌더하고, 언마운트 시 Promise를 정리하며, 여러 개가 쌓여도 스택으로 관리되도록 설계했습니다.',
+      },
+      {
+        label: '공유링크 대응 이중 HTTP 계층',
+        tone: 'tech',
+        problem: '인증 API는 401이면 토큰을 재발급해야 하지만, 비로그인자가 여는 읽기 전용 공유링크(/shared)에서 같은 인터셉터가 돌면 불필요한 재발급 요청과 무한 루프가 생깁니다.',
+        solution:
+          '인증용과 공개용 axios 인스턴스를 분리해, 재발급 인터셉터가 걸리는 요청 범위 자체를 구조적으로 갈랐습니다. 공유링크는 토큰 없이도 안전하게, 인증 요청만 재발급 흐름을 타도록 했습니다.',
+      },
+      {
+        label: '토큰 자동 재발급 인터셉터',
+        tone: 'tech',
+        problem: 'access 토큰이 만료돼 여러 요청이 동시에 401을 받으면, 각 요청이 제각기 refresh를 호출해 재발급이 중복되고 토큰 회전이 꼬였습니다.',
+        solution:
+          '첫 401에서만 refresh를 실행하고 나머지 요청은 그 하나의 Promise를 기다리도록 single-flight로 묶었습니다. 재발급이 끝나면 대기 중이던 요청들을 새 토큰으로 한 번에 재시도합니다.',
+      },
+      {
+        label: '컴파운드 컴포넌트 + 런타임 가드',
+        tone: 'design',
+        problem: 'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
+        solution:
+          'createCompoundGuard로 Context 존재를 검사해, <GroupCard.Title>을 <GroupCard> 밖에서 쓰면 명확한 메시지의 런타임 에러를 던지게 했습니다. 오용을 침묵시키지 않고 즉시 드러내는 설계입니다.',
+      },
+    ],
   },
 
   // ── 07 · 코드잽 (우아한테크코스 팀 프로젝트) · service 레이아웃 ───────────────
@@ -278,28 +295,28 @@ export const projects: Project[] = [
     highlights: [
       {
         label: '번들 최적화',
-        tone: 'decision',
+        tone: 'perf',
         problem: '핵심 기능인 코드 에디터(CodeMirror)가 8MB에 달해, 첫 화면 로드가 눈에 띄게 무거웠습니다.',
         solution:
           'bundle-analyzer로 뜯어보니 실제로 안 쓰는 언어 문법까지 전부 포함돼 있었습니다. 지원 언어를 실사용분으로 좁혀 Tree Shaking이 걸리게 하고, 에디터는 Dynamic Import로 초기 번들에서 떼어내 2.2MB → 1.4MB로 줄였습니다.',
       },
       {
         label: '디자인 시스템',
-        tone: 'problem',
+        tone: 'design',
         problem: '재사용성과 선언적 레이아웃에 끌려 <Flex>를 레이아웃 원자로 아토믹하게 도입했는데, 실제 화면에 쓸수록 direction·gap 같은 프롭스가 마크업을 뒤덮고 <Flex>가 무한 중첩됐습니다.',
         solution:
           '구조를 읽을 수 없는 "Flex Soup"과 Emotion의 의미 있는 네이밍 상실을 겪으며, 무조건적 세분화가 아니라 기술 스택 특성에 맞춰 추상화 수준을 제어해야 한다는 기준을 얻었습니다.',
       },
       {
         label: '웹 접근성',
-        tone: 'accent',
+        tone: 'ux',
         problem: '모달을 열어도 초점이 뒤 배경으로 새어나가고, 비동기로 바뀐 목록을 스크린리더가 읽어주지 않았습니다.',
         solution:
           '자동 검사 도구로는 잡히지 않아 VoiceOver·TalkBack 실기기로 직접 흐름을 따라가며, 포커스 트랩으로 초점을 모달 안에 가두고 aria-live로 변경 사항을 읽어주도록 고쳤습니다.',
       },
       {
         label: '레이아웃 시프트',
-        tone: 'result',
+        tone: 'perf',
         problem: '목록·상세가 로드될 때마다 아래 콘텐츠가 밀려, 누르려던 버튼이 어긋나는 레이아웃 시프트가 반복됐습니다(CLS 0.8).',
         solution:
           '스켈레톤만으로는 실제 콘텐츠와 높이가 어긋나 시프트가 남았기에, 응답 전에 최종 높이값 자체를 예약해 콘텐츠가 그 자리에 그대로 들어오도록 만들어 CLS를 0.3으로 낮췄습니다.',

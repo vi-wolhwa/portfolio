@@ -33,6 +33,17 @@
   --result: #0e7c61;
   --result-weak: #e4f4ee;
 
+  /* --- 색: 하이라이트 카테고리 (service 레이아웃) ---
+     perf=파랑(성능) / ux=초록(경험·품질) / design=빨강(설계 반성) / tech=보라(기술 심화) */
+  --hl-perf: #2563c9;
+  --hl-perf-weak: #e8f0fc;
+  --hl-ux: #0e7c61;
+  --hl-ux-weak: #e4f4ee;
+  --hl-design: #c2410c;
+  --hl-design-weak: #fdf0e8;
+  --hl-tech: #7c3aed;
+  --hl-tech-weak: #f2ecfe;
+
   /* --- 위험 --- */
   --danger: #e0503a;
 

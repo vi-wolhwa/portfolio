@@ -284,21 +284,21 @@
   padding: 16px 0;
   border-top: 1px solid var(--line);
 
-  &[data-tone='problem'] {
-    --tone: var(--problem);
-    --tone-weak: var(--problem-weak);
+  &[data-tone='perf'] {
+    --tone: var(--hl-perf);
+    --tone-weak: var(--hl-perf-weak);
   }
-  &[data-tone='decision'] {
-    --tone: var(--decision);
-    --tone-weak: var(--decision-weak);
+  &[data-tone='ux'] {
+    --tone: var(--hl-ux);
+    --tone-weak: var(--hl-ux-weak);
   }
-  &[data-tone='result'] {
-    --tone: var(--result);
-    --tone-weak: var(--result-weak);
+  &[data-tone='design'] {
+    --tone: var(--hl-design);
+    --tone-weak: var(--hl-design-weak);
   }
-  &[data-tone='accent'] {
-    --tone: var(--accent);
-    --tone-weak: var(--accent-weak);
+  &[data-tone='tech'] {
+    --tone: var(--hl-tech);
+    --tone-weak: var(--hl-tech-weak);
   }
 }
 
@@ -364,26 +364,24 @@
   font-weight: 700;
 }
 
-/* ── 하단 flow 요약 띠 ── */
+/* ── 하단 flow 요약 (한눈에 보기) — 톤 도트 + 알약 배지로 본문 디자인과 통일 ── */
 .flow {
   margin-top: auto;
-  padding-top: 8px;
+  padding-top: 10px;
 }
 
 .flowEyebrow {
   display: block;
-  margin-bottom: 8px;
-  font-family: var(--font-mono);
+  margin-bottom: 9px;
   font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   color: var(--faint);
 }
 
 .flowRow {
   display: flex;
   align-items: stretch;
-  gap: 4px;
+  gap: 6px;
 }
 
 .flowStep {
@@ -398,34 +396,62 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
   padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--tone);
-  border-top: 3px solid var(--tone);
-  background: var(--tone-weak);
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+
+  &[data-tone='problem'] {
+    --tone: var(--problem);
+    --tone-weak: var(--problem-weak);
+  }
+  &[data-tone='decision'] {
+    --tone: var(--decision);
+    --tone-weak: var(--decision-weak);
+  }
+  &[data-tone='result'] {
+    --tone: var(--result);
+    --tone-weak: var(--result-weak);
+  }
+}
+
+.flowTagRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.flowDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow: 0 0 0 3px var(--tone-weak);
 }
 
 .flowTag {
   font-size: 11.5px;
   font-weight: 700;
   color: var(--tone);
+  background: var(--tone-weak);
+  padding: 2px 9px;
+  border-radius: 999px;
 }
 
 .flowText {
   margin: 0;
   font-size: 12.5px;
   line-height: 1.5;
-  color: var(--ink);
+  color: var(--muted);
 }
 
 .flowArrow {
   display: flex;
   align-items: center;
-  padding: 0 4px;
+  padding: 0 3px;
   color: var(--faint);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 15px;
 }
 
 /* ── 푸터 ── */
