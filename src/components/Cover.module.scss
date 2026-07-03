@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: 1fr var(--aside-w);
   gap: var(--aside-gap);
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -132,7 +132,7 @@
 /* ── 목차 ── */
 .tocWrap {
   flex: 1;
-  padding-top: 26px;
+  padding-top: 15px;
 }
 
 .tocHead {
@@ -170,7 +170,7 @@
   border-top: 1px solid var(--line);
 
   &:last-child {
-    border-bottom: 1px solid var(--line);
+    border-bottom: none;
   }
 }
 
@@ -222,7 +222,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 18px;
   padding-top: 14px;
   border-top: 1px solid var(--line);
 }
