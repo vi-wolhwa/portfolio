@@ -34,7 +34,8 @@ export const projects: Project[] = [
     order: 1,
     org: 'kakaopay',
     title: '모바일 웹뷰 TradingView 차트 렌더링 성능 최적화',
-    tagline: '가장 중요한 페이지가 느렸던 근본 원인을 찾아, 데이터와 렌더링 우선순위를 재설계했습니다.',
+    tagline:
+      '가장 중요한 페이지가 느렸던 근본 원인을 찾아, 데이터와 렌더링 우선순위를 재설계했습니다.',
     role: 'Frontend · 인턴',
     period: '2025.02 – 2025.08',
     stack: ['Next.js', 'React 18', 'TypeScript', 'React-query', 'MyAxios'],
@@ -42,7 +43,7 @@ export const projects: Project[] = [
       {
         kind: 'docs',
         url: 'https://app.notion.com/p/sums-log/P-A3-SSR-32ae39398dfb802aae4ac2102d30dd41',
-        label: 'SSR 전략 설계 (P-A3)',
+        label: 'SSR 전략 설계',
       },
     ],
     problem: {
@@ -80,7 +81,8 @@ export const projects: Project[] = [
     order: 2,
     org: 'kakaopay',
     title: '프로필 서비스 MFE 이관과 신규 개편',
-    tagline: '닉네임 프로필을 금융 데이터 서비스로 개편하려면, 독립 배포 인프라로의 이관이 먼저였습니다.',
+    tagline:
+      '닉네임 프로필을 금융 데이터 서비스로 개편하려면, 독립 배포 인프라로의 이관이 먼저였습니다.',
     role: 'Frontend · 인턴',
     period: '2025.02 – 2025.08',
     stack: ['React', 'TypeScript', 'MSW', 'Webpack'],
@@ -88,12 +90,12 @@ export const projects: Project[] = [
       {
         kind: 'docs',
         url: 'https://app.notion.com/p/sums-log/P-B1-327e39398dfb80428d5ff64f1c9caf85',
-        label: '공통 패키지 승인 병목 (P-B1)',
+        label: '공통 패키지 승인 병목',
       },
       {
         kind: 'docs',
         url: 'https://app.notion.com/p/sums-log/P-B2-MSW-API-329e39398dfb8035a221dd02b951b4f6',
-        label: 'MSW로 API 명세 검증 (P-B2)',
+        label: 'MSW로 API 명세 검증',
       },
     ],
     problem: {
@@ -130,7 +132,8 @@ export const projects: Project[] = [
     order: 3,
     org: 'kakaopay',
     title: '프로필 접근 제어 모듈 설계',
-    tagline: '컴포넌트가 데이터 출력과 권한 판단을 동시에 떠안지 않도록, 두 책임을 구조적으로 분리했습니다.',
+    tagline:
+      '컴포넌트가 데이터 출력과 권한 판단을 동시에 떠안지 않도록, 두 책임을 구조적으로 분리했습니다.',
     role: 'Frontend · 인턴',
     period: '2025.02 – 2025.08',
     stack: ['React', 'TypeScript', 'React-query'],
@@ -138,7 +141,7 @@ export const projects: Project[] = [
       {
         kind: 'docs',
         url: 'https://app.notion.com/p/sums-log/P-B3-327e39398dfb80648a09f4acec413de7',
-        label: '접근 제어 모듈 설계 (P-B3)',
+        label: '접근 제어 모듈 설계',
       },
     ],
     problem: {
@@ -181,12 +184,12 @@ export const projects: Project[] = [
       {
         kind: 'docs',
         url: 'https://app.notion.com/p/sums-log/P-C1-333e39398dfb8099a6a8e47c73d7b7b2',
-        label: '리뷰 병목 해결 정책 (P-C1)',
+        label: '리뷰 병목 해결 정책',
       },
       {
         kind: 'docs',
         url: 'https://app.notion.com/p/sums-log/P-C2-Github-333e39398dfb80fb855cf05272c47276',
-        label: '크롬 익스텐션 개발기 (P-C2)',
+        label: '크롬 익스텐션 개발기',
       },
     ],
     problem: {
@@ -266,7 +269,8 @@ export const projects: Project[] = [
     variant: 'service',
     org: 'evenly',
     title: 'Evenly — 모임 정산(더치페이) 서비스',
-    tagline: '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
+    tagline:
+      '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
     description:
       '여행·모임 지출을 모아 “누가 누구에게 얼마”를 최소 송금으로 정리해주는 더치페이 서비스입니다. 정산 계산은 서버가 맡고 있어, 저는 의도적으로 프론트엔드의 핵심 역량 — 재사용 가능한 UI 추상화와 HTTP·인증 설계 — 을 끝까지 밀어붙이는 것을 이 프로젝트의 목표로 삼았습니다.',
     role: 'Frontend',
@@ -277,28 +281,32 @@ export const projects: Project[] = [
       {
         label: '명령형 오버레이 (useOverlay)',
         tone: 'tech',
-        problem: '지출 삭제·정산 완료·회원 탈퇴 등 확인 다이얼로그가 화면마다 반복됐는데, 매번 isOpen state와 콜백을 부모가 들고 있어야 해 보일러플레이트가 쌓였습니다.',
+        problem:
+          '지출 삭제·정산 완료·회원 탈퇴 등 확인 다이얼로그가 화면마다 반복됐는데, 매번 isOpen state와 콜백을 부모가 들고 있어야 해 보일러플레이트가 쌓였습니다.',
         solution:
           '모달을 트리에 선언하는 대신 const ok = await confirm({...}) 한 줄로 여는 Promise 기반 오버레이를 만들었습니다. Portal로 트리 밖에 렌더하고, 언마운트 시 Promise를 정리하며, 여러 개가 쌓여도 스택으로 관리되도록 설계했습니다.',
       },
       {
         label: '공유링크 대응 이중 HTTP 계층',
         tone: 'tech',
-        problem: '인증 API는 401이면 토큰을 재발급해야 하지만, 비로그인자가 여는 읽기 전용 공유링크(/shared)에서 같은 인터셉터가 돌면 불필요한 재발급 요청과 무한 루프가 생깁니다.',
+        problem:
+          '인증 API는 401이면 토큰을 재발급해야 하지만, 비로그인자가 여는 읽기 전용 공유링크(/shared)에서 같은 인터셉터가 돌면 불필요한 재발급 요청과 무한 루프가 생깁니다.',
         solution:
           '인증용과 공개용 axios 인스턴스를 분리해, 재발급 인터셉터가 걸리는 요청 범위 자체를 구조적으로 갈랐습니다. 공유링크는 토큰 없이도 안전하게, 인증 요청만 재발급 흐름을 타도록 했습니다.',
       },
       {
         label: '토큰 자동 재발급 인터셉터',
         tone: 'tech',
-        problem: 'access 토큰이 만료돼 여러 요청이 동시에 401을 받으면, 각 요청이 제각기 refresh를 호출해 재발급이 중복되고 토큰 회전이 꼬였습니다.',
+        problem:
+          'access 토큰이 만료돼 여러 요청이 동시에 401을 받으면, 각 요청이 제각기 refresh를 호출해 재발급이 중복되고 토큰 회전이 꼬였습니다.',
         solution:
           '첫 401에서만 refresh를 실행하고 나머지 요청은 그 하나의 Promise를 기다리도록 single-flight로 묶었습니다. 재발급이 끝나면 대기 중이던 요청들을 새 토큰으로 한 번에 재시도합니다.',
       },
       {
         label: '컴파운드 컴포넌트 + 런타임 가드',
         tone: 'tech',
-        problem: 'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
+        problem:
+          'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
         solution:
           'createCompoundGuard로 Context 존재를 검사해, <GroupCard.Title>을 <GroupCard> 밖에서 쓰면 명확한 메시지의 런타임 에러를 던지게 했습니다. 오용을 침묵시키지 않고 즉시 드러내는 설계입니다.',
       },
@@ -312,7 +320,8 @@ export const projects: Project[] = [
     variant: 'service',
     org: 'woowacourse',
     title: '코드잽 — 코드 템플릿 저장·공유 서비스',
-    tagline: '5개월간 하나의 서비스를 처음부터 만들며 마주친 프론트엔드 문제들을, 하나씩 파고들어 풀었습니다.',
+    tagline:
+      '5개월간 하나의 서비스를 처음부터 만들며 마주친 프론트엔드 문제들을, 하나씩 파고들어 풀었습니다.',
     description:
       '자주 쓰는 코드를 매번 이전 프로젝트에서 뒤지던 개발자를 위해, 코드 템플릿을 저장하고 빠르게 검색·재사용하는 서비스입니다. 프론트엔드 3인·백엔드 5인이 실사용 서비스로 배포했고, 저는 프론트엔드 개발자로 참여했습니다.',
     role: 'Frontend · FE 3인 · BE 5인',
@@ -330,28 +339,32 @@ export const projects: Project[] = [
       {
         label: '번들 최적화',
         tone: 'tech',
-        problem: '핵심 기능인 코드 에디터(CodeMirror)가 8MB에 달해, 첫 화면 로드가 눈에 띄게 무거웠습니다.',
+        problem:
+          '핵심 기능인 코드 에디터(CodeMirror)가 8MB에 달해, 첫 화면 로드가 눈에 띄게 무거웠습니다.',
         solution:
           'bundle-analyzer로 뜯어보니 실제로 안 쓰는 언어 문법까지 전부 포함돼 있었습니다. 지원 언어를 실사용분으로 좁혀 Tree Shaking이 걸리게 하고, 에디터는 Dynamic Import로 초기 번들에서 떼어내 2.2MB → 1.4MB로 줄였습니다.',
       },
       {
         label: '디자인 시스템',
         tone: 'tech',
-        problem: '재사용성과 선언적 레이아웃에 끌려 <Flex>를 레이아웃 원자로 아토믹하게 도입했는데, 실제 화면에 쓸수록 direction·gap 같은 프롭스가 마크업을 뒤덮고 <Flex>가 무한 중첩됐습니다.',
+        problem:
+          '재사용성과 선언적 레이아웃에 끌려 <Flex>를 레이아웃 원자로 아토믹하게 도입했는데, 실제 화면에 쓸수록 direction·gap 같은 프롭스가 마크업을 뒤덮고 <Flex>가 무한 중첩됐습니다.',
         solution:
           '구조를 읽을 수 없는 "Flex Soup"과 Emotion의 의미 있는 네이밍 상실을 겪으며, 무조건적 세분화가 아니라 기술 스택 특성에 맞춰 추상화 수준을 제어해야 한다는 기준을 얻었습니다.',
       },
       {
         label: '웹 접근성',
         tone: 'tech',
-        problem: '모달을 열어도 초점이 뒤 배경으로 새어나가고, 비동기로 바뀐 목록을 스크린리더가 읽어주지 않았습니다.',
+        problem:
+          '모달을 열어도 초점이 뒤 배경으로 새어나가고, 비동기로 바뀐 목록을 스크린리더가 읽어주지 않았습니다.',
         solution:
           '자동 검사 도구로는 잡히지 않아 VoiceOver·TalkBack 실기기로 직접 흐름을 따라가며, 포커스 트랩으로 초점을 모달 안에 가두고 aria-live로 변경 사항을 읽어주도록 고쳤습니다.',
       },
       {
         label: '레이아웃 시프트',
         tone: 'tech',
-        problem: '목록·상세가 로드될 때마다 아래 콘텐츠가 밀려, 누르려던 버튼이 어긋나는 레이아웃 시프트가 반복됐습니다(CLS 0.8).',
+        problem:
+          '목록·상세가 로드될 때마다 아래 콘텐츠가 밀려, 누르려던 버튼이 어긋나는 레이아웃 시프트가 반복됐습니다(CLS 0.8).',
         solution:
           '스켈레톤만으로는 실제 콘텐츠와 높이가 어긋나 시프트가 남았기에, 응답 전에 최종 높이값 자체를 예약해 콘텐츠가 그 자리에 그대로 들어오도록 만들어 CLS를 0.3으로 낮췄습니다.',
       },
