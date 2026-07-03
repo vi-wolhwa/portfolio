@@ -1,5 +1,6 @@
-import type { Act as ActType, Metric, Project } from '@/types/portfolio';
+import type { Act as ActType, Card as CardType, Project } from '@/types/portfolio';
 import { RefLinks } from './RefLinks';
+import { OrgTag } from './OrgTag';
 import styles from './ProjectPage.module.scss';
 
 interface Props {
@@ -16,16 +17,30 @@ const TONE_LABEL: Record<Tone, string> = {
   result: '결과',
 };
 
-/** 한 막(문제/판단/결과)을 상태 레일 한 칸으로 렌더링한다. */
-function ActRow({
-  tone,
-  act,
-  metrics,
-}: {
-  tone: Tone;
-  act: ActType;
-  metrics?: Metric[];
-}) {
+const FLOW_LABEL: Record<Tone, string> = {
+  problem: '문제',
+  decision: '판단',
+  result: '결과',
+};
+
+/** 요약 카드 한 장. before 가 있으면 before → value, 없으면 value 만. 색은 부모(막)에서 상속. */
+function Card({ card }: { card: CardType }) {
+  return (
+    <div className={styles.card}>
+      <span className={styles.cLabel}>{card.label}</span>
+      <span className={styles.cValueRow}>
+        {card.before && <span className={styles.cBefore}>{card.before}</span>}
+        {card.before && <span className={styles.cArrow}>→</span>}
+        <span className={styles.cValue}>{card.value}</span>
+        {card.delta && <span className={styles.cDelta}>{card.delta}</span>}
+      </span>
+      {card.note && <span className={styles.cNote}>{card.note}</span>}
+    </div>
+  );
+}
+
+/** 한 막(문제/판단/결과)을 상태 레일 한 칸으로. 카드가 있으면 하단에 요약 카드도 붙는다. */
+function ActRow({ tone, act }: { tone: Tone; act: ActType }) {
   return (
     <div className={styles.act} data-tone={tone}>
       <div className={styles.rail}>
@@ -48,18 +63,10 @@ function ActRow({
           </ul>
         )}
 
-        {metrics && metrics.length > 0 && (
-          <div className={styles.metrics}>
-            {metrics.map((m) => (
-              <div key={m.label} className={styles.metric}>
-                <span className={styles.mLabel}>{m.label}</span>
-                <span className={styles.mValues}>
-                  {m.before && <span className={styles.mBefore}>{m.before}</span>}
-                  {m.before && <span className={styles.mArrow}>→</span>}
-                  <span className={styles.mAfter}>{m.after}</span>
-                </span>
-                {m.delta && <span className={styles.mDelta}>{m.delta}</span>}
-              </div>
+        {act.cards && act.cards.length > 0 && (
+          <div className={styles.cards}>
+            {act.cards.map((c) => (
+              <Card key={c.label} card={c} />
             ))}
           </div>
         )}
@@ -68,17 +75,50 @@ function ActRow({
   );
 }
 
-/** 프로젝트 1개 = A4 한 페이지. */
-export function ProjectPage({ project, pageIndex, total }: Props) {
-  const { order, title, tagline, role, period, stack, refs } = project;
+/** 하단 flow 요약 — 문제(빨강) → 판단(파랑) → 결과(초록) 카드를 연결해 핵심만 보여준다. */
+function FlowStrip({ flow }: { flow: NonNullable<Project['flow']> }) {
+  const steps: [Tone, string][] = [
+    ['problem', flow.problem],
+    ['decision', flow.decision],
+    ['result', flow.result],
+  ];
 
   return (
-    <section className={`page ${styles.page}`}>
+    <div className={styles.flow}>
+      <span className={styles.flowEyebrow}>한눈에 보기</span>
+      <div className={styles.flowRow}>
+        {steps.map(([tone, text], i) => (
+          <div key={tone} className={styles.flowStep}>
+            <div className={styles.flowCard} data-tone={tone}>
+              <span className={styles.flowTag}>{FLOW_LABEL[tone]}</span>
+              <p className={styles.flowText}>{text}</p>
+            </div>
+            {i < steps.length - 1 && (
+              <span className={styles.flowArrow} aria-hidden>
+                →
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** 프로젝트 1개 = A4 한 페이지. id 는 목차 앵커 이동 대상. */
+export function ProjectPage({ project, pageIndex, total }: Props) {
+  const { id, order, org, title, tagline, role, period, stack, refs } = project;
+
+  return (
+    <section id={id} className={`page ${styles.page}`}>
       <RefLinks refs={refs} />
 
       <header className={styles.meta}>
         <div className={styles.metaTop}>
-          <span className={styles.order}>{String(order).padStart(2, '0')}</span>
+          <span className={styles.metaLeft}>
+            <span className={styles.order}>{String(order).padStart(2, '0')}</span>
+            <OrgTag org={org} />
+          </span>
           <span className={styles.roleRow}>
             {role} <span className={styles.sep}>·</span> {period}
           </span>
@@ -92,10 +132,14 @@ export function ProjectPage({ project, pageIndex, total }: Props) {
         </ul>
       </header>
 
-      <div className={styles.story}>
-        <ActRow tone="problem" act={project.problem} />
-        <ActRow tone="decision" act={project.decision} />
-        <ActRow tone="result" act={project.result} metrics={project.metrics} />
+      <div className={styles.body}>
+        <div className={styles.story}>
+          <ActRow tone="problem" act={project.problem} />
+          <ActRow tone="decision" act={project.decision} />
+          <ActRow tone="result" act={project.result} />
+        </div>
+
+        {project.flow && <FlowStrip flow={project.flow} />}
       </div>
 
       <footer className={styles.foot}>

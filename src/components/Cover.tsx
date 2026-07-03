@@ -1,4 +1,5 @@
 import type { Profile, Project } from '@/types/portfolio';
+import { OrgTag } from './OrgTag';
 import styles from './Cover.module.scss';
 
 interface Props {
@@ -8,41 +9,50 @@ interface Props {
   total: number;
 }
 
-/** 첫 페이지 — 개인 정보(히어로) + 목차. 목차는 projects 를 단일 출처로 생성한다. */
+/** 첫 페이지 — (좌) 개인 정보 / (우) 사진·링크 2단 + 목차. 목차는 projects 를 단일 출처로 생성. */
 export function Cover({ profile, projects, pageIndex, total }: Props) {
   return (
     <section className={`cover ${styles.cover}`}>
-      <header className={styles.hero}>
-        <p className={styles.eyebrow}>{profile.role}</p>
-        <h1 className={styles.name}>{profile.name}</h1>
-        <p className={styles.thesis}>{profile.thesis}</p>
+      <div className={styles.top}>
+        {/* 좌: 이름 · 소개 · 키워드 */}
+        <div className={styles.identity}>
+          <p className={styles.eyebrow}>{profile.role}</p>
+          <h1 className={styles.name}>{profile.name}</h1>
+          <p className={styles.thesis}>{profile.thesis}</p>
+          <ul className={styles.keywords}>
+            {profile.keywords.map((k) => (
+              <li key={k}>{k}</li>
+            ))}
+          </ul>
+        </div>
 
-        <ul className={styles.keywords}>
-          {profile.keywords.map((k) => (
-            <li key={k}>{k}</li>
-          ))}
-        </ul>
+        {/* 우: 사진(옵션) · 링크 */}
+        <aside className={styles.aside}>
+          {profile.showPhoto && profile.photoUrl && (
+            <img className={styles.photo} src={profile.photoUrl} alt={`${profile.name} 프로필`} />
+          )}
+          <ul className={styles.contacts}>
+            {profile.contacts.map((c) => (
+              <li key={c.label}>
+                <span className={styles.cLabel}>{c.label}</span>
+                {c.href ? (
+                  <a href={c.href} target="_blank" rel="noreferrer noopener">
+                    {c.value}
+                  </a>
+                ) : (
+                  <span>{c.value}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
 
-        <ul className={styles.contacts}>
-          {profile.contacts.map((c) => (
-            <li key={c.label}>
-              <span className={styles.cLabel}>{c.label}</span>
-              {c.href ? (
-                <a href={c.href} target="_blank" rel="noreferrer noopener">
-                  {c.value}
-                </a>
-              ) : (
-                <span>{c.value}</span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </header>
-
+      {/* 목차 */}
       <div className={styles.tocWrap}>
         <div className={styles.tocHead}>
           <h2>Contents</h2>
-          <span className={styles.tocNote}>각 프로젝트는 문제 → 판단 → 결과 순서로 읽힙니다</span>
+          <span className={styles.tocNote}>제목을 누르면 해당 프로젝트로 이동합니다</span>
         </div>
 
         <ol className={styles.toc}>
@@ -50,21 +60,21 @@ export function Cover({ profile, projects, pageIndex, total }: Props) {
             <li key={p.id} className={styles.tocItem}>
               <span className={styles.tocOrder}>{String(p.order).padStart(2, '0')}</span>
               <span className={styles.tocBody}>
-                <span className={styles.tocTitle}>{p.title}</span>
+                <span className={styles.tocTitleRow}>
+                  <a className={styles.tocTitle} href={`#${p.id}`}>
+                    {p.title}
+                  </a>
+                </span>
                 <span className={styles.tocLead}>{p.problem.lead}</span>
               </span>
-              <span className={styles.tocPage}>p.{p.order + 1}</span>
+              <OrgTag org={p.org} size="sm" />
             </li>
           ))}
         </ol>
       </div>
 
       <footer className={styles.foot}>
-        <span className={styles.legend}>
-          <i data-tone="problem" /> 문제
-          <i data-tone="decision" /> 판단
-          <i data-tone="result" /> 결과
-        </span>
+        <span className={styles.footName}>남수민 · Frontend Portfolio</span>
         <span className={styles.pageNo}>
           {String(pageIndex).padStart(2, '0')} / {String(total).padStart(2, '0')}
         </span>

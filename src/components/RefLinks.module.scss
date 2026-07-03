@@ -7,62 +7,65 @@
 .link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: #fff;
+  gap: 8px;
+  padding: 7px 13px;
+  border-radius: 8px;
+  border: 1px solid var(--brand-line);
+  background: var(--brand-bg);
+  color: var(--brand-fg);
   text-decoration: none;
-  color: var(--ink);
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
 
   &:hover {
-    border-color: var(--accent);
-    background: var(--accent-weak);
+    background: var(--brand-hover);
+    border-color: var(--brand);
+  }
+  &:active {
+    transform: translateY(1px);
   }
 }
 
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--k, var(--accent));
-}
-
-.kind {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--k, var(--accent));
+.mark {
+  color: var(--brand);
+  flex: none;
 }
 
 .label {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
+  font-weight: 700;
+  color: var(--brand-fg);
+  letter-spacing: -0.01em;
 }
 
 .ext {
-  color: var(--faint);
+  color: var(--brand);
+  opacity: 0.55;
 }
 
-/* 링크 종류별 색 */
+/* ── 서비스별 테마 ── */
 .link[data-kind='github'] {
-  --k: #1f2328;
+  --brand: #1f2328;
+  --brand-fg: #1f2328;
+  --brand-bg: #ffffff;
+  --brand-line: #d6dae1;
+  --brand-hover: #f3f4f6;
 }
-.link[data-kind='live'] {
-  --k: #0e7c61;
+
+.link[data-kind='npm'] {
+  --brand: #cb3837;
+  --brand-fg: #a02726;
+  --brand-bg: #fdf0ef;
+  --brand-line: #f3cfce;
+  --brand-hover: #fbe3e2;
 }
-.link[data-kind='blog'] {
-  --k: #5b5bd6;
-}
-.link[data-kind='video'] {
-  --k: #c2410c;
-}
+
 .link[data-kind='docs'] {
-  --k: #4f46e5;
-}
-.link[data-kind='design'] {
-  --k: #b1338e;
+  --brand: #5b5bd6;
+  --brand-fg: #3f3fb0;
+  --brand-bg: #eef0fe;
+  --brand-line: #d7d9f8;
+  --brand-hover: #e4e6fd;
 }

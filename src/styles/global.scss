@@ -53,6 +53,17 @@ body {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth; /* 목차 앵커 이동 */
+}
+
+/* 목차 → 페이지 앵커 이동 */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--app-bg);
   color: var(--ink);
@@ -90,6 +101,7 @@ a {
     0 1px 2px rgba(20, 22, 30, 0.06),
     0 12px 32px rgba(20, 22, 30, 0.1);
   overflow: hidden; /* 넘친 내용은 잘려 보이고, 훅이 빨간 테두리로 경고 */
+  scroll-margin-top: var(--page-gap); /* 앵커 이동 시 상단 여백 확보 */
 }
 
 /* --- 297mm 초과 시 경고 --- */
@@ -108,6 +120,9 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   * {
     animation: none !important;
     transition: none !important;
