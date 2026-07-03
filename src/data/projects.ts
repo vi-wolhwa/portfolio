@@ -19,48 +19,42 @@ import type { Project } from '@/types/portfolio';
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export const projects: Project[] = [
-  // ── 01 · 의사결정형 예시 ────────────────────────────────────────────────────
+  // ── 01 · 모바일 웹뷰 TradingView 렌더링 성능 최적화 ─────────────────────────
   {
-    id: 'dashboard-ssr',
+    id: 'tradingview-mobile-rendering',
     order: 1,
     org: 'kakaopay',
-    title: '결제 대시보드 초기 로딩 최적화',
-    tagline: '첫 화면 로딩 지연으로 이탈하던 사용자를, 렌더링 전략을 바꿔 붙잡았습니다.',
-    role: 'Frontend · 3인',
-    period: '2024.03 – 2024.06',
-    stack: ['Next.js', 'React', 'TypeScript', 'React Query'],
-    refs: [
-      { kind: 'github', url: 'https://github.com/yourname/repo' },
-      { kind: 'docs', url: 'https://yourblog.dev/post', label: '회고 글' },
-    ],
+    title: '모바일 웹뷰 TradingView 차트 렌더링 성능 최적화',
+    tagline: '데이터를 기다리는 시간과 렌더링 자원 경합, 서로 다른 두 병목을 각각의 전략으로 없앴습니다.',
+    role: 'Frontend · 인턴',
+    period: '2025.02 – 2025.08',
+    stack: ['Next.js', 'React 18', 'TypeScript', 'React-query', 'MyAxios'],
+    refs: [],
     problem: {
-      lead: '데이터가 많은 첫 화면이 빈 상태로 오래 머물러, 진입 단계에서 사용자가 떠나고 있었습니다.',
+      lead: 'Canvas 기반인 TradingView 위젯은 SSR이 불가능한데, 자원이 제한된 모바일 웹뷰에서 데이터 대기와 무거운 렌더링 연산이 동시에 겹쳐 메인 스레드를 막았습니다.',
       points: [
-        '거래·잔액·차트를 클라이언트에서 순차 요청해 첫 유의미한 화면까지 체감 지연이 컸습니다.',
-        '스켈레톤만 길게 노출돼 "느린 서비스"라는 인상이 이탈로 이어졌습니다.',
+        '캔들 데이터를 마운트 후 직렬로 요청해 대기 시간이 길었고, 도착과 동시에 JS 파싱·Canvas 초기화가 몰려 진입 지연과 프레임드랍으로 이어졌습니다.',
       ],
-      cards: [{ label: '첫 화면 FCP', value: '0.5s', note: '스켈레톤 장시간 노출' }],
     },
     decision: {
-      heading: 'CSR 유지 vs SSR 전환',
-      lead: '전면 재작성 대신, 첫 화면에 필요한 데이터만 서버에서 미리 그려 보내기로 했습니다.',
+      lead: '데이터를 기다리는 시간은 서버 프리페칭으로, 렌더링 자원 경합은 우선순위 재배치로 없앴습니다.',
       points: [
-        'CSR 유지(캐싱 강화)는 지연만 줄일 뿐 "빈 화면" 문제 자체는 남는다고 판단했습니다.',
-        '전면 SSR은 상호작용 로직 재작성 비용이 커, 초기 표시 영역만 SSR로 한정했습니다.',
+        '데이터: MyAxios(안정성)와 React-query Hydration으로, 서버가 미리 가져온 데이터를 클라이언트가 끊김없이 이어받도록 표준화했습니다.',
+        '렌더링: dynamic import로 지연 로딩을 시도했지만 효과가 없어 기각했습니다. "자원을 먼저 쓰는 순서"로 재정의해 startTransition으로 우선순위를 재배치했습니다.',
       ],
     },
     result: {
-      lead: '첫 콘텐츠 표시가 눈에 띄게 빨라졌고, 진입 이탈이 줄었습니다.',
-      points: ['전환 패턴을 팀 표준 문서로 정리해 다른 화면에도 적용했습니다.'],
+      lead: '데이터 대기와 자원 경합을 모두 없애며, 추가 인프라 비용 없이 체감 성능을 끌어올렸습니다.',
+      points: ['줌·스크롤 시 화면이 밀리던 프레임드랍(Jank) 현상이 해소됐습니다.'],
       cards: [
         { label: 'FCP', before: '0.5s', value: '0.2s', delta: '-60%' },
-        { label: '진입 이탈', before: '기준', value: '감소', delta: '↓' },
+        { label: '인프라 비용', before: '기존', value: '증가 없음', note: 'Grafana 기준 CPU 사용량 유지' },
       ],
     },
     flow: {
-      problem: '첫 화면이 빈 채로 오래 머물러 진입 이탈 발생 (FCP 0.5s)',
-      decision: '전면 SSR 대신 초기 표시 영역만 부분 SSR로 한정',
-      result: 'FCP 0.2s로 개선, 전환 패턴을 팀 표준화',
+      problem: 'SSR 불가 + 데이터 대기·렌더링 연산 충돌로 메인 스레드 정체',
+      decision: '서버 프리페칭 + dynamic import 기각 → startTransition 재배치',
+      result: 'FCP 0.5s → 0.2s, 프레임드랍 해소, 인프라 비용 0',
     },
   },
 

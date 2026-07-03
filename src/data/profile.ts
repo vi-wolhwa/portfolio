@@ -13,9 +13,9 @@ export const profile: Profile = {
   showPhoto: false, // 사진을 넣으려면 true 로 바꾸고 photoUrl 지정
   photoUrl: '', // 예: '/me.jpg' (public 폴더) 또는 외부 URL
   contacts: [
-    { label: 'Email', value: 'cerezo00@naver.com', href: 'mailto:cerezo00@naver.com' },
-    { label: 'GitHub', value: 'github.com/vi-wolhwa', href: 'https://github.com/vi-wolhwa' },
-    { label: 'NPM', value: 'npmjs.com/~cerezo00', href: 'https://www.npmjs.com/~cerezo00' },
+    { label: 'Email', value: 'you@example.com', href: 'mailto:you@example.com' },
+    { label: 'GitHub', value: 'github.com/yourname', href: 'https://github.com/yourname' },
+    { label: 'Blog', value: 'yourblog.dev', href: 'https://yourblog.dev' },
   ],
   keywords: ['웹 성능 최적화', 'DX / 협업 자동화', '문제 정의 & 의사결정', 'React · TypeScript'],
 };
