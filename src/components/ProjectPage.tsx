@@ -1,4 +1,4 @@
-import type { Act as ActType, Card as CardType, Project } from '@/types/portfolio';
+import type { Act as ActType, Project } from '@/types/portfolio';
 import { RefLinks } from './RefLinks';
 import { OrgTag } from './OrgTag';
 import styles from './ProjectPage.module.scss';
@@ -23,23 +23,7 @@ const FLOW_LABEL: Record<Tone, string> = {
   result: '결과',
 };
 
-/** 요약 카드 한 장. before 가 있으면 before → value, 없으면 value 만. 색은 부모(막)에서 상속. */
-function Card({ card }: { card: CardType }) {
-  return (
-    <div className={styles.card}>
-      <span className={styles.cLabel}>{card.label}</span>
-      <span className={styles.cValueRow}>
-        {card.before && <span className={styles.cBefore}>{card.before}</span>}
-        {card.before && <span className={styles.cArrow}>→</span>}
-        <span className={styles.cValue}>{card.value}</span>
-        {card.delta && <span className={styles.cDelta}>{card.delta}</span>}
-      </span>
-      {card.note && <span className={styles.cNote}>{card.note}</span>}
-    </div>
-  );
-}
-
-/** 한 막(문제/판단/결과)을 상태 레일 한 칸으로. 카드가 있으면 하단에 요약 카드도 붙는다. */
+/** 한 막(문제/판단/결과)을 상태 레일 한 칸으로. 정량 수치는 points 문장 안에 녹여 쓴다. */
 function ActRow({ tone, act }: { tone: Tone; act: ActType }) {
   return (
     <div className={styles.act} data-tone={tone}>
@@ -61,14 +45,6 @@ function ActRow({ tone, act }: { tone: Tone; act: ActType }) {
               <li key={i}>{p}</li>
             ))}
           </ul>
-        )}
-
-        {act.cards && act.cards.length > 0 && (
-          <div className={styles.cards}>
-            {act.cards.map((c) => (
-              <Card key={c.label} card={c} />
-            ))}
-          </div>
         )}
       </div>
     </div>
