@@ -33,43 +33,57 @@ export const projects: Project[] = [
     org: 'kakaopay',
     title: '모바일 웹뷰 TradingView 차트 렌더링 성능 최적화',
     tagline:
-      '가장 중요한 페이지가 느렸던 근본 원인을 찾아, 데이터와 렌더링 우선순위를 재설계했습니다.',
+      '렌더링 속도를 늦추던 근본 원인을 찾아, 데이터 패칭과 렌더링 우선순위 전략을 재설계했습니다.',
     role: 'Frontend · 인턴',
     period: '2025.04 – 2025.07',
     stack: ['# SSR', '# React-query', '# Hydration', '# startTransition'],
     refs: [
       {
         kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-A1-32ae39398dfb807db2bad219d572531d',
+        label: '서버사이드 통신 라이브러리 분석',
+      },
+      {
+        kind: 'docs',
+        url: 'https://app.notion.com/p/sums-log/P-A2-React-query-Hydration-32ce39398dfb80f3a344f81ec8943db1',
+        label: 'Hydration 아키텍처 설계',
+      },
+      {
+        kind: 'docs',
         url: 'https://app.notion.com/p/sums-log/P-A3-SSR-32ae39398dfb802aae4ac2102d30dd41',
-        label: 'SSR 전략 설계',
+        label: '렌더링 최적화 전략 설계',
       },
     ],
     problem: {
-      lead: '서비스에서 가장 많은 트래픽이 몰리는 종목 정보 페이지의 핵심인 TradingView 차트가, 모바일에서 뜨기까지 오래 걸렸습니다.',
+      lead: '가장 많은 트래픽이 몰리는 종목 차트의 로딩 속도가 느리다는 VoC를 지속적으로 받아왔습니다.',
       points: [
-        '초기 렌더링을 서버로 앞당기면 해결될 거라 보고 SSR을 검토했지만, TradingView는 Canvas와 window 전역 객체에 의존해 서버에서는 애초에 그릴 수 없는 구조였습니다.',
-        '결국 클라이언트가 마운트된 뒤에야 캔들 데이터를 직렬로 요청했고, 데이터가 도착하는 순간 무거운 JS 파싱과 Canvas 초기화가 한꺼번에 몰려 자원이 제한된 모바일 웹뷰의 메인 스레드를 독점했습니다. 진입은 늦어지고 줌·스크롤은 뚝뚝 끊겼습니다.',
+        'SSR 전환을 고려했으나, TradingView는 Canvas와 window에 의존하기 때문에 SSR이 불가능했습니다.',
+        '종목 정보는 차트와 무관한 API들과 Promise.All로 묶여있었고, 유저 정보를 직렬로 호출하는 구조였습니다.',
+        'API 응답을 받은 모든 컴포넌트가 동시에 렌더링을 시도하면서, TradingView의 무거운 JS 파싱과 Canvas 초기화에 자원을 집중할 수 없었습니다.',
       ],
     },
     decision: {
-      lead: 'TradingView 자체는 서버에서 그릴 수 없었지만, 차트가 쓰는 데이터는 서버에서 미리 가져올 수 있었습니다.',
+      lead: '사용자가 로딩이 끝났다고 느끼는 시점은 종목 차트가 완전히 그려지는 시점입니다.',
       points: [
-        '그래서 데이터 페칭만 서버로 옮겨, 사내 표준 인프라인 MyAxios와 React-query Hydration으로 서버가 미리 가져온 데이터를 클라이언트가 끊김없이 이어받도록 표준화했습니다.',
-        '데이터가 준비된 뒤에도 마운트 직후 주변 컴포넌트들이 차트와 동시에 자원을 그리며 메인 스레드를 다시 두고 경쟁했습니다. "안 보이는 컴포넌트를 늦게 그리면 빨라질 것"이란 가설로 dynamic import를 실측했지만 Next.js의 자동 코드 스플리팅과 겹쳐 효과가 없어 기각했습니다.',
-        '문제를 "무엇을 그리느냐"가 아니라 "누가 자원을 먼저 쓰느냐"로 재정의해, startTransition으로 주변 컴포넌트의 렌더링을 후순위로 미루고 차트에 자원을 몰아줬습니다.',
+        '압도적으로 느린 차트의 렌더링 속도를 개선하기 위해, 다른 컴포넌트의 렌더링 타이밍을 늦췄습니다.',
+        '서버사이드에서 스켈레톤 UI를 Pre-render하여, 페이지가 빠르게 로딩되는 것처럼 느껴지도록 했습니다.',
+        '서버사이드에서 유저/종목 정보 API를 Prefetching, Streaming하여 차트의 렌더링 시작 시점을 앞당겼고, 이외 API는 클라이언트 사이드에 남겨두어 우선순위를 물리적으로 분리했습니다.',
+        '뷰포트 내/외부 컴포넌트의 우선순위를 분리하기 위해 SSR Streaming과 Dynamic-import를 시도했으나, 컴포넌트가 모두 API 응답을 기다리는 것과, Next.js의 자동 Code Splitting 덕분에 효과는 없었습니다.',
+        '우선순위를 분리하는 다른 방법으로, startTransition을 활용하여 다른 컴포넌트의 렌더링을 지연시켜, 차트의 렌더링 시작 타이밍을 앞당겼습니다.',
       ],
     },
     result: {
-      lead: '데이터 대기와 렌더링 경합을 차례로 없애며 체감 성능을 끌어올렸고, 서버 비용은 오히려 늘지 않았습니다.',
+      lead: '유의미한 실측 수치를 확보했고, 차트 렌더링 속도에 대한 VoC가 90% 감소했습니다.',
       points: [
-        'FCP는 0.5초에서 0.2초로 줄었고, 줌·스크롤 시 화면이 밀리던 프레임드랍도 해소됐습니다.',
-        '서버 비용이 그대로였던 이유는 TradingView에 필요한 종목 데이터만 서버에서 가져오고, 나머지 컴포넌트는 프리렌더 단계에서 스켈레톤만 내려보냈기 때문입니다.',
+        'FCP는 0.5s에서 0.2s로 감소했고, 차트 렌더링 완료 시점은 0.6s 빨라졌습니다. ',
+        'Pre-render 단계에서 스켈레톤만 렌더링하기 때문에, 유의미한 서버 비용의 증가는 없었습니다.',
+        '배포일을 기점으로, 전/후 3주 동안 차트 렌더링 속도에 대한 VoC가 90% 감소했습니다.',
       ],
     },
     flow: {
-      problem: '핵심 페이지의 차트가 느렸고, SSR도 구조적으로 불가능했음',
-      decision: '데이터만 서버에서 프리페칭, 나머지는 우선순위 재배치(startTransition)',
-      result: 'FCP 0.5s → 0.2s, 서버 비용 0 (데이터만 최소 범위로 프리페칭)',
+      problem: '차트 로딩 속도에 대한 VoC 유입, 차트는 구조적으로 SSR 불가능',
+      decision: 'SSR → 차트 프리페칭·스켈레톤 + startTransition 렌더링 우선순위',
+      result: 'FCP -0.3s, 차트 렌더링 -0.6s, 추가 서버 비용 0, VoC -90%',
     },
   },
 
@@ -265,61 +279,10 @@ export const projects: Project[] = [
     },
   },
 
-  // ── 06 · Evenly (Evenly팀 프로젝트) · service 레이아웃 ────────────────────────
-  {
-    id: 'evenly',
-    order: 6,
-    variant: 'service',
-    org: 'evenly',
-    title: 'Evenly — 모임 정산(더치페이) 서비스',
-    tagline:
-      '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
-    description:
-      '여행·모임 지출을 모아 “누가 누구에게 얼마”를 최소 송금으로 정리해주는 더치페이 서비스입니다. 정산 계산은 서버가 맡고 있어, 저는 의도적으로 프론트엔드의 핵심 역량 — 재사용 가능한 UI 추상화와 HTTP·인증 설계 — 을 끝까지 밀어붙이는 것을 이 프로젝트의 목표로 삼았습니다.',
-    role: 'Frontend',
-    period: '2025.06 – 진행 중',
-    stack: ['# Imperative Overlay', '# Single-flight', '# Runtime Guard'],
-    refs: [{ kind: 'github', url: 'https://github.com/EvenlyTeam/evenly-frontend' }],
-    highlights: [
-      {
-        label: '명령형 오버레이 (useOverlay)',
-        tone: 'tech',
-        problem:
-          '지출 삭제·정산 완료·회원 탈퇴 등 확인 다이얼로그가 화면마다 반복됐는데, 매번 isOpen state와 콜백을 부모가 들고 있어야 해 보일러플레이트가 쌓였습니다.',
-        solution:
-          '모달을 트리에 선언하는 대신 const ok = await confirm({...}) 한 줄로 여는 Promise 기반 오버레이를 만들었습니다. Portal로 트리 밖에 렌더하고, 언마운트 시 Promise를 정리하며, 여러 개가 쌓여도 스택으로 관리되도록 설계했습니다.',
-      },
-      {
-        label: '공유링크 대응 이중 HTTP 계층',
-        tone: 'tech',
-        problem:
-          '인증 API는 401 응답을 받으면 토큰을 재발급해야 하지만, 비로그인자가 여는 읽기 전용 공유링크(/shared)에서 같은 인터셉터가 돌면서 불필요한 재발급 요청과 무한 루프가 발생했습니다.',
-        solution:
-          '인증용과 공개용 axios 인스턴스를 분리해, 재발급 인터셉터가 걸리는 요청 범위 자체를 구조적으로 갈랐습니다. 공유링크는 토큰 없이도 안전하게, 인증 요청만 재발급 흐름을 타도록 했습니다.',
-      },
-      {
-        label: '토큰 자동 재발급 인터셉터',
-        tone: 'tech',
-        problem:
-          'access 토큰이 만료돼 여러 요청이 동시에 401을 받으면, 각 요청이 제각기 refresh를 호출해 재발급이 중복되고 토큰 회전이 꼬였습니다.',
-        solution:
-          '첫 401에서만 refresh를 실행하고 나머지 요청은 그 하나의 Promise를 기다리도록 single-flight로 묶었습니다. 재발급이 끝나면 대기 중이던 요청들을 새 토큰으로 한 번에 재시도합니다.',
-      },
-      {
-        label: '컴파운드 컴포넌트 + 런타임 가드',
-        tone: 'tech',
-        problem:
-          'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
-        solution:
-          'createCompoundGuard로 Context 존재를 검사해, <GroupCard.Title>을 <GroupCard> 밖에서 쓰면 명확한 메시지의 런타임 에러를 던지게 했습니다. 오용을 침묵시키지 않고 즉시 드러내는 설계입니다.',
-      },
-    ],
-  },
-
   // ── 07 · 코드잽 (우아한테크코스 팀 프로젝트) · service 레이아웃 ───────────────
   {
     id: 'codezap',
-    order: 7,
+    order: 6,
     variant: 'service',
     org: 'woowacourse',
     title: '코드잽 — 코드 템플릿 저장·공유 서비스',
@@ -370,6 +333,57 @@ export const projects: Project[] = [
           '목록·상세가 로드될 때마다 아래 콘텐츠가 밀려, 누르려던 버튼이 어긋나는 레이아웃 시프트가 반복됐습니다(CLS 0.8).',
         solution:
           '스켈레톤만으로는 실제 콘텐츠와 높이가 어긋나 시프트가 남았기에, 응답 전에 최종 높이값 자체를 예약해 콘텐츠가 그 자리에 그대로 들어오도록 만들어 CLS를 0.3으로 낮췄습니다.',
+      },
+    ],
+  },
+
+  // ── 06 · Evenly (Evenly팀 프로젝트) · service 레이아웃 ────────────────────────
+  {
+    id: 'evenly',
+    order: 99,
+    variant: 'service',
+    org: 'evenly',
+    title: 'Evenly — 모임 정산(더치페이) 서비스',
+    tagline:
+      '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
+    description:
+      '여행·모임 지출을 모아 “누가 누구에게 얼마”를 최소 송금으로 정리해주는 더치페이 서비스입니다. 정산 계산은 서버가 맡고 있어, 저는 의도적으로 프론트엔드의 핵심 역량 — 재사용 가능한 UI 추상화와 HTTP·인증 설계 — 을 끝까지 밀어붙이는 것을 이 프로젝트의 목표로 삼았습니다.',
+    role: 'Frontend',
+    period: '2025.06 – 진행 중',
+    stack: ['# Imperative Overlay', '# Single-flight', '# Runtime Guard'],
+    refs: [{ kind: 'github', url: 'https://github.com/EvenlyTeam/evenly-frontend' }],
+    highlights: [
+      {
+        label: '명령형 오버레이 (useOverlay)',
+        tone: 'tech',
+        problem:
+          '지출 삭제·정산 완료·회원 탈퇴 등 확인 다이얼로그가 화면마다 반복됐는데, 매번 isOpen state와 콜백을 부모가 들고 있어야 해 보일러플레이트가 쌓였습니다.',
+        solution:
+          '모달을 트리에 선언하는 대신 const ok = await confirm({...}) 한 줄로 여는 Promise 기반 오버레이를 만들었습니다. Portal로 트리 밖에 렌더하고, 언마운트 시 Promise를 정리하며, 여러 개가 쌓여도 스택으로 관리되도록 설계했습니다.',
+      },
+      {
+        label: '공유링크 대응 이중 HTTP 계층',
+        tone: 'tech',
+        problem:
+          '인증 API는 401 응답을 받으면 토큰을 재발급해야 하지만, 비로그인자가 여는 읽기 전용 공유링크(/shared)에서 같은 인터셉터가 돌면서 불필요한 재발급 요청과 무한 루프가 발생했습니다.',
+        solution:
+          '인증용과 공개용 axios 인스턴스를 분리해, 재발급 인터셉터가 걸리는 요청 범위 자체를 구조적으로 갈랐습니다. 공유링크는 토큰 없이도 안전하게, 인증 요청만 재발급 흐름을 타도록 했습니다.',
+      },
+      {
+        label: '토큰 자동 재발급 인터셉터',
+        tone: 'tech',
+        problem:
+          'access 토큰이 만료돼 여러 요청이 동시에 401을 받으면, 각 요청이 제각기 refresh를 호출해 재발급이 중복되고 토큰 회전이 꼬였습니다.',
+        solution:
+          '첫 401에서만 refresh를 실행하고 나머지 요청은 그 하나의 Promise를 기다리도록 single-flight로 묶었습니다. 재발급이 끝나면 대기 중이던 요청들을 새 토큰으로 한 번에 재시도합니다.',
+      },
+      {
+        label: '컴파운드 컴포넌트 + 런타임 가드',
+        tone: 'tech',
+        problem:
+          'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
+        solution:
+          'createCompoundGuard로 Context 존재를 검사해, <GroupCard.Title>을 <GroupCard> 밖에서 쓰면 명확한 메시지의 런타임 에러를 던지게 했습니다. 오용을 침묵시키지 않고 즉시 드러내는 설계입니다.',
       },
     ],
   },
