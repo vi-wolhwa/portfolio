@@ -18,7 +18,7 @@ npm run preview  # 빌드 결과 미리보기
 ## 내용 채우는 곳 (여기만 수정)
 
 - `src/data/profile.ts` — 이름·소개·키워드·연락처. `showPhoto: true` 로 두고 `photoUrl` 지정 시 오른쪽 열에 사진 노출.
-- `src/data/projects.ts` — 프로젝트 6개. `01`·`02`는 완성 예시, `03~06`은 빈 템플릿. **목차는 이 파일을 단일 출처로 자동 생성**됩니다.
+- `src/data/projects.ts` — 프로젝트 7개(`01~05` story, `06~07` service). **목차는 이 파일을 단일 출처로 자동 생성**됩니다.
 - `src/data/organizations.ts` — 조직 태그 정의(라벨 + 색). 키를 추가해 `project.org` 에서 참조.
 - 스키마 정의는 `src/types/portfolio.ts`.
 
