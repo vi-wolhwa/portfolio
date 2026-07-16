@@ -14,7 +14,7 @@ export const profile: Profile = {
     '저만의 웹 생태계를 구축하는 <AudeModo> 프로젝트를 진행 중입니다. React/Spring을 넘어 웹 생태계 전반을 이해하고, 비즈니스의 복잡한 문제를 가장 효율적인 아키텍처로 풀어내는 올라운드 엔지니어를 목표로 합니다.',
   ],
   showPhoto: true, // public/me.png 를 사용. 사진을 빼려면 false
-  photoUrl: '/me.png', // public 폴더의 파일은 '/파일명' 으로 접근한다
+  photoUrl: `${import.meta.env.BASE_URL}me.png`, // BASE_URL 기준 — GitHub Pages 서브패스에서도 깨지지 않는다
   contacts: [
     { label: 'Phone', value: '010-3773-1856', href: '' },
     { label: 'Email', value: 'cerezo00@naver.com', href: 'mailto:cerezo00@naver.com' },
