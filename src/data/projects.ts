@@ -286,60 +286,60 @@ export const projects: Project[] = [
   },
 
   // ── 06 · Evenly (Evenly팀 프로젝트) · service 레이아웃 ────────────────────────
-  {
-    id: 'evenly',
-    order: 6,
-    variant: 'service',
-    org: 'evenly',
-    title: 'Evenly — 모임 정산(더치페이) 서비스',
-    tagline:
-      '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
-    description:
-      '여행·모임 지출을 모아 “누가 누구에게 얼마”를 최소 송금으로 정리해주는 더치페이 서비스입니다. 정산 계산은 서버가 맡고 있어, 저는 의도적으로 프론트엔드의 핵심 역량 — 재사용 가능한 UI 추상화와 HTTP·인증 설계 — 을 끝까지 밀어붙이는 것을 이 프로젝트의 목표로 삼았습니다.',
-    role: 'Frontend',
-    period: '2025.06 – 진행 중',
-    stack: ['# Imperative Overlay', '# Single-flight', '# Runtime Guard'],
-    refs: [{ kind: 'github', url: 'https://github.com/EvenlyTeam/evenly-frontend' }],
-    highlights: [
-      {
-        label: '명령형 오버레이 (useOverlay)',
-        tone: 'tech',
-        problem:
-          '지출 삭제·정산 완료·회원 탈퇴 등 확인 다이얼로그가 화면마다 반복됐는데, 매번 isOpen state와 콜백을 부모가 들고 있어야 해 보일러플레이트가 쌓였습니다.',
-        solution:
-          '모달을 트리에 선언하는 대신 const ok = await confirm({...}) 한 줄로 여는 Promise 기반 오버레이를 만들었습니다. Portal로 트리 밖에 렌더하고, 언마운트 시 Promise를 정리하며, 여러 개가 쌓여도 스택으로 관리되도록 설계했습니다.',
-      },
-      {
-        label: '공유링크 대응 이중 HTTP 계층',
-        tone: 'tech',
-        problem:
-          '인증 API는 401 응답을 받으면 토큰을 재발급해야 하지만, 비로그인자가 여는 읽기 전용 공유링크(/shared)에서 같은 인터셉터가 돌면서 불필요한 재발급 요청과 무한 루프가 발생했습니다.',
-        solution:
-          '인증용과 공개용 axios 인스턴스를 분리해, 재발급 인터셉터가 걸리는 요청 범위 자체를 구조적으로 갈랐습니다. 공유링크는 토큰 없이도 안전하게, 인증 요청만 재발급 흐름을 타도록 했습니다.',
-      },
-      {
-        label: '토큰 자동 재발급 인터셉터',
-        tone: 'tech',
-        problem:
-          'access 토큰이 만료돼 여러 요청이 동시에 401을 받으면, 각 요청이 제각기 refresh를 호출해 재발급이 중복되고 토큰 회전이 꼬였습니다.',
-        solution:
-          '첫 401에서만 refresh를 실행하고 나머지 요청은 그 Promise를 기다리도록 single-flight로 묶었습니다. 재발급이 끝나면 대기 요청을 새 토큰으로 재시도합니다. 다만 대기 중 refresh token이 만료되면 큐를 모두 실패 처리하고 재로그인으로 보내는 예외 처리는 여전히 신경 써야 합니다.',
-      },
-      {
-        label: '컴파운드 컴포넌트 + 런타임 가드',
-        tone: 'tech',
-        problem:
-          'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
-        solution:
-          'createCompoundGuard로 Context 존재를 검사해, <GroupCard.Title>을 <GroupCard> 밖에서 쓰면 명확한 메시지의 런타임 에러를 던지게 했습니다. 오용을 침묵시키지 않고 즉시 드러내는 설계이지만, Context 값이 바뀌면 무관한 하위 컴포넌트까지 리렌더링되고 가드도 런타임에만 오용을 잡아낸다는 한계는 남아 있습니다.',
-      },
-    ],
-  },
+  // {
+  //   id: 'evenly',
+  //   order: 6,
+  //   variant: 'service',
+  //   org: 'evenly',
+  //   title: 'Evenly — 모임 정산(더치페이) 서비스',
+  //   tagline:
+  //     '서버가 계산을 맡는 구조에서, 프론트엔드가 진짜 책임지는 영역을 깊게 파고든 프로젝트입니다.',
+  //   description:
+  //     '여행·모임 지출을 모아 “누가 누구에게 얼마”를 최소 송금으로 정리해주는 더치페이 서비스입니다. 정산 계산은 서버가 맡고 있어, 저는 의도적으로 프론트엔드의 핵심 역량 — 재사용 가능한 UI 추상화와 HTTP·인증 설계 — 을 끝까지 밀어붙이는 것을 이 프로젝트의 목표로 삼았습니다.',
+  //   role: 'Frontend',
+  //   period: '2025.06 – 진행 중',
+  //   stack: ['# Imperative Overlay', '# Single-flight', '# Runtime Guard'],
+  //   refs: [{ kind: 'github', url: 'https://github.com/EvenlyTeam/evenly-frontend' }],
+  //   highlights: [
+  //     {
+  //       label: '명령형 오버레이 (useOverlay)',
+  //       tone: 'tech',
+  //       problem:
+  //         '지출 삭제·정산 완료·회원 탈퇴 등 확인 다이얼로그가 화면마다 반복됐는데, 매번 isOpen state와 콜백을 부모가 들고 있어야 해 보일러플레이트가 쌓였습니다.',
+  //       solution:
+  //         '모달을 트리에 선언하는 대신 const ok = await confirm({...}) 한 줄로 여는 Promise 기반 오버레이를 만들었습니다. Portal로 트리 밖에 렌더하고, 언마운트 시 Promise를 정리하며, 여러 개가 쌓여도 스택으로 관리되도록 설계했습니다.',
+  //     },
+  //     {
+  //       label: '공유링크 대응 이중 HTTP 계층',
+  //       tone: 'tech',
+  //       problem:
+  //         '인증 API는 401 응답을 받으면 토큰을 재발급해야 하지만, 비로그인자가 여는 읽기 전용 공유링크(/shared)에서 같은 인터셉터가 돌면서 불필요한 재발급 요청과 무한 루프가 발생했습니다.',
+  //       solution:
+  //         '인증용과 공개용 axios 인스턴스를 분리해, 재발급 인터셉터가 걸리는 요청 범위 자체를 구조적으로 갈랐습니다. 공유링크는 토큰 없이도 안전하게, 인증 요청만 재발급 흐름을 타도록 했습니다.',
+  //     },
+  //     {
+  //       label: '토큰 자동 재발급 인터셉터',
+  //       tone: 'tech',
+  //       problem:
+  //         'access 토큰이 만료돼 여러 요청이 동시에 401을 받으면, 각 요청이 제각기 refresh를 호출해 재발급이 중복되고 토큰 회전이 꼬였습니다.',
+  //       solution:
+  //         '첫 401에서만 refresh를 실행하고 나머지 요청은 그 Promise를 기다리도록 single-flight로 묶었습니다. 재발급이 끝나면 대기 요청을 새 토큰으로 재시도합니다. 다만 대기 중 refresh token이 만료되면 큐를 모두 실패 처리하고 재로그인으로 보내는 예외 처리는 여전히 신경 써야 합니다.',
+  //     },
+  //     {
+  //       label: '컴파운드 컴포넌트 + 런타임 가드',
+  //       tone: 'tech',
+  //       problem:
+  //         'GroupCard·Navbar 같은 합성 컴포넌트가 늘면서, 하위 조각을 부모 밖에서 잘못 쓰면 조용히 깨지는 실수가 생길 수 있었습니다.',
+  //       solution:
+  //         'createCompoundGuard로 Context 존재를 검사해, <GroupCard.Title>을 <GroupCard> 밖에서 쓰면 명확한 메시지의 런타임 에러를 던지게 했습니다. 오용을 침묵시키지 않고 즉시 드러내는 설계이지만, Context 값이 바뀌면 무관한 하위 컴포넌트까지 리렌더링되고 가드도 런타임에만 오용을 잡아낸다는 한계는 남아 있습니다.',
+  //     },
+  //   ],
+  // },
 
   // ── 07 · 코드잽 (우아한테크코스 팀 프로젝트) · service 레이아웃 ───────────────
   {
     id: 'codezap',
-    order: 7,
+    order: 6,
     variant: 'service',
     org: 'woowacourse',
     title: '코드잽 — 코드 템플릿 저장·공유 서비스',

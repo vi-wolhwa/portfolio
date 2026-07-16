@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>남수민 · Frontend Portfolio</title>
 
-    <!-- 본문/제목: Pretendard (한글·라틴 겸용) -->
+    <!-- 본문/제목: Pretendard (self-host) — CDN 대신 로컬 번들로 인쇄 시 폰트 유실 방지.
+         @font-face 는 src/styles/global.scss 에 정의. 첫 페인트/인쇄 전에 미리 로드. -->
     <link
-      rel="stylesheet"
-      as="style"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/PretendardVariable.woff2"
       crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
   </head>
   <body>

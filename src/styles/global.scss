@@ -6,6 +6,20 @@
    - 색/타이포는 모두 CSS 변수로 노출 → 모듈 SCSS에서 var()로 재사용.
    ============================================================================= */
 
+/* 폰트 self-host — public/fonts 에 포함해 CDN·네트워크 의존을 없앤다.
+   인쇄 다이얼로그는 웹폰트 로딩을 기다리지 않으므로, CDN 링크 방식에서는
+   페이지를 열자마자 인쇄하면 폴백 폰트로 찍히는 문제가 있었다. 로컬 번들 +
+   font-display:block 으로 화면·PDF가 항상 동일한 Pretendard 로 렌더되게 한다. */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: block;
+  src:
+    url('/fonts/PretendardVariable.woff2') format('woff2') tech('variations'),
+    url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
 :root {
   /* --- 지면 --- */
   --page-w: 210mm;
@@ -80,6 +94,10 @@ body {
   background: var(--app-bg);
   color: var(--ink);
   font-family: var(--font-sans);
+  font-weight: 400;
+  /* 가변 폰트가 인쇄 엔진에서 wght 축을 못 살릴 때 브라우저가 굵기를 인위로
+     합성(faux-bold)해 화면보다 두껍게 찍히는 문제를 막는다. 실제 글리프 굵기만 사용. */
+  font-synthesis: none;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
